@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaliganj Hands · Together for a Better Tomorrow</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fef9f2;  /* warm off-white */
+            line-height: 1.5;
+            color: #1e2a2f;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: linear-gradient(135deg, #fffaf0 0%, #ffe9d6 100%);
+            overflow: hidden;
+        }
+
+        /* subtle organic pattern overlay */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 30% 40%, rgba(255, 127, 62, 0.03) 0%, transparent 30%),
+                              radial-gradient(circle at 80% 70%, rgba(76, 175, 80, 0.03) 0%, transparent 35%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 2.5rem;
+            width: 100%;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Logo & brand */
+        .logo-area {
+            margin-bottom: 3rem;
+        }
+
+        .kh-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(145deg, #FF7F3E, #FF9F5C);
+            border-radius: 24px 8px 24px 8px;  /* distinctive friendly shape */
+            box-shadow: 0 15px 25px -8px rgba(255, 127, 62, 0.3);
+            transition: transform 0.2s ease;
+        }
+
+        .kh-logo span {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .kh-logo:hover {
+            transform: scale(1.02);
+        }
+
+        /* Main heading */
+        .hero-title {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.15;
+            letter-spacing: -1px;
+            color: #1E2A2F;
+            max-width: 900px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title .outline {
+            color: #FF7F3E;
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-title .outline::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 8px;
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 215, 0, 0.25);
+            z-index: -1;
+            border-radius: 20px;
+        }
+
+        .tagline {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            font-style: italic;
+            color: #4A5C62;
+            margin-bottom: 1rem;
+            letter-spacing: -0.3px;
+        }
+
+        .tagline i {
+            color: #FF7F3E;
+            margin-right: 8px;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: #2e3b41;
+            max-width: 650px;
+            margin: 1.8rem 0 2.5rem 0;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(4px);
+            padding: 1.2rem 2rem;
+            border-radius: 30px 12px 30px 12px;
+            box-shadow: 0 8px 20px -6px rgba(0,0,0,0.05);
+            border: 1px solid rgba(255,127,62,0.2);
+        }
+
+        .hero-description strong {
+            color: #FF7F3E;
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 1rem 2.4rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.03);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: #FF7F3E;
+            color: white;
+            box-shadow: 0 15px 25px -8px #FF7F3E;
+        }
+
+        .btn-primary i {
+            font-size: 1.4rem;
+        }
+
+        .btn-primary:hover {
+            background: #e5672a;
+            transform: translateY(-3px);
+            box-shadow: 0 22px 28px -8px #FF7F3E;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #1e2a2f;
+            border: 2px solid #FF7F3E;
+            box-shadow: none;
+        }
+
+        .btn-outline i {
+            color: #FF7F3E;
+            font-size: 1.3rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: #FFF2E7;
+            border-color: #e5672a;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline:hover i {
+            transform: scale(1.1);
+            color: #e5672a;
+        }
+
+        /* community visual element */
+        .hero-image-wrapper {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 45%;
+            height: 90%;
+            pointer-events: none;
+            opacity: 0.5;
+            z-index: 0;
+        }
+
+        .hero-image-wrapper img {
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+            object-position: left center;
+            mask-image: linear-gradient(to left, rgba(0,0,0,0.9) 30%, transparent 100%);
+        }
+
+        /* abstract shapes (modern premium touch) */
+        .shape-1 {
+            position: absolute;
+            left: -50px;
+            bottom: 80px;
+            width: 280px;
+            height: 280px;
+            background: #FFD93D;
+            opacity: 0.15;
+            border-radius: 50%;
+            filter: blur(60px);
+            z-index: 0;
+        }
+
+        .shape-2 {
+            position: absolute;
+            right: 100px;
+            top: 50px;
+            width: 200px;
+            height: 200px;
+            background: #4CAF50;
+            opacity: 0.1;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            filter: blur(60px);
+            z-index: 0;
+        }
+
+        /* small stat / trust badge */
+        .trust-badge {
+            margin-top: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            background: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 40px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.02);
+            border: 1px solid rgba(255,127,62,0.2);
+        }
+
+        .badge-item i {
+            color: #FF7F3E;
+            font-size: 1.2rem;
+        }
+
+        /* responsive */
+        @media (max-width: 900px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            .tagline {
+                font-size: 1.4rem;
+            }
+            .hero-description {
+                font-size: 1.1rem;
+                padding: 1rem 1.5rem;
+            }
+            .btn {
+                padding: 0.9rem 2rem;
+                font-size: 1.1rem;
+            }
+            .hero-image-wrapper {
+                width: 60%;
+                opacity: 0.3;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .tagline {
+                font-size: 1.2rem;
+            }
+            .btn-group {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .btn {
+                justify-content: center;
+            }
+            .kh-logo {
+                width: 70px;
+                height: 70px;
+            }
+            .kh-logo span {
+                font-size: 2.2rem;
+            }
+            .trust-badge {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <!-- abstract glowing shapes (premium) -->
+        <div class="shape-1"></div>
+        <div class="shape-2"></div>
+
+        <!-- soft community background image (just for feeling) – you can replace with actual image -->
+        <div class="hero-image-wrapper">
+            <!-- এই div-এ আপনি একটি actual community photo বসাতে পারেন। 
+                 example: <img src="https://images.unsplash.com/..."> 
+                 নিচে unsplash থেকে একটি রেফারেন্স ইমেজ (প্রিমিয়াম ফিল) ব্যবহার করছি। 
+                 ইমেজ না থাকলে এটি blank থাকবে। -->
+            <img src="https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                 alt="Community support" 
+                 style="opacity: 0.7;"
+                 onerror="this.style.display='none'">
+        </div>
+
+        <div class="container">
+            <!-- Logo KH -->
+            <div class="logo-area">
+                <div class="kh-logo">
+                    <span>KH</span>
+                </div>
+            </div>
+
+            <!-- Tagline -->
+            <div class="tagline">
+                <i class="fas fa-heart"></i> Together for a Better Tomorrow
+            </div>
+
+            <!-- Main Title -->
+            <h1 class="hero-title">
+                <span class="outline">Kaliganj Hands</span>
+            </h1>
+
+            <!-- Short description (exactly as you wrote) -->
+            <div class="hero-description">
+                <strong>A community-driven service organization</strong> dedicated to helping people and building a stronger society.
+            </div>
+
+            <!-- Buttons (exactly as requested) -->
+            <div class="btn-group">
+                <a href="#" class="btn btn-primary">
+                    <i class="fas fa-hand-holding-heart"></i> Join as Volunteer
+                </a>
+                <a href="#" class="btn btn-outline">
+                    <i class="fas fa-seedling"></i> Support Our Activities
+                </a>
+            </div>
+
+            <!-- Optional small trust badges / community vibe -->
+            <div class="trust-badge">
+                <span class="badge-item"><i class="fas fa-people-group"></i> 500+ Volunteers</span>
+                <span class="badge-item"><i class="fas fa-tree"></i> 30+ Projects</span>
+                <span class="badge-item"><i class="fas fa-bangladesh-taka"></i> 100% Transparency</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Next section (এটি শুধু homepage সম্পূর্ণতার জন্য, আপনি বাকি অংশ নিজের মত করে বাড়াতে পারেন) -->
+    <section style="padding: 5rem 2.5rem; background: #fff; text-align: center;">
+        <p style="font-size: 1.1rem; color: #7f8c8d;">🙌 Hero section ready — now extend with mission, programs, impact, etc.</p>
+    </section>
+</body>
+</html>
