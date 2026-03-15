@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaliganj Hands · About Us</title>
+    <!-- Font & Icons (same as hero for consistency) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1e2a2f;
+            line-height: 1.6;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #fcf9f5 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #FF7F3E;
+            text-transform: uppercase;
+            background: rgba(255, 127, 62, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 127, 62, 0.2);
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #1E2A2F;
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            line-height: 1.2;
+        }
+
+        .section-title span {
+            color: #FF7F3E;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 215, 0, 0.25);
+            z-index: -1;
+            border-radius: 20px;
+        }
+
+        /* Story Card (Main Quote/Story) */
+        .story-card {
+            background: white;
+            border-radius: 30px 12px 30px 12px;
+            padding: 3.5rem;
+            margin-bottom: 4rem;
+            box-shadow: 0 30px 50px -20px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255, 127, 62, 0.15);
+            position: relative;
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .story-card::before {
+            content: '“';
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 8rem;
+            font-family: 'Playfair Display', serif;
+            color: #FF7F3E;
+            opacity: 0.15;
+            z-index: 0;
+        }
+
+        .story-text {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: #2e3b41;
+            font-weight: 400;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            font-style: italic;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .story-text strong {
+            color: #FF7F3E;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        .story-author {
+            text-align: center;
+            margin-top: 2rem;
+            font-weight: 500;
+            color: #7f8c8d;
+            letter-spacing: 0.5px;
+        }
+
+        /* Three Cards Grid (Purpose, Vision, etc) */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .about-card {
+            background: white;
+            padding: 2.8rem 2rem;
+            border-radius: 24px 12px 24px 12px;
+            box-shadow: 0 15px 30px -10px rgba(255, 127, 62, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.02);
+            text-align: center;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 40px -15px rgba(255, 127, 62, 0.25);
+            border-color: rgba(255, 127, 62, 0.2);
+        }
+
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #FF7F3E, #FF9F5C);
+            border-radius: 20px 6px 20px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: 0 15px 20px -8px #FF7F3E;
+        }
+
+        .card-icon i {
+            font-size: 2.8rem;
+            color: white;
+        }
+
+        .card-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1E2A2F;
+            margin-bottom: 1.2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .card-description {
+            font-size: 1.1rem;
+            color: #4a5c62;
+            line-height: 1.7;
+            padding: 0 0.5rem;
+        }
+
+        /* Mission stat mini (optional) */
+        .about-stats {
+            display: flex;
+            justify-content: center;
+            gap: 4rem;
+            margin-top: 5rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #FF7F3E;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #7f8c8d;
+            margin-top: 0.5rem;
+        }
+
+        /* abstract background shapes (premium) */
+        .about-shape-1 {
+            position: absolute;
+            top: 100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: #FFD93D;
+            opacity: 0.07;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: 0;
+        }
+
+        .about-shape-2 {
+            position: absolute;
+            bottom: 50px;
+            right: -50px;
+            width: 250px;
+            height: 250px;
+            background: #4CAF50;
+            opacity: 0.07;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            filter: blur(70px);
+            z-index: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .about-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .story-text {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .about-section {
+                padding: 4rem 1.5rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            .story-card {
+                padding: 2rem 1.5rem;
+            }
+            .story-text {
+                font-size: 1.2rem;
+            }
+            .card-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="about-section">
+        <!-- background shapes (premium depth) -->
+        <div class="about-shape-1"></div>
+        <div class="about-shape-2"></div>
+
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <div class="section-tag">
+                    <i class="fas fa-heart" style="margin-right: 8px;"></i> About Kaliganj Hands
+                </div>
+                <h2 class="section-title">
+                    <span>Together</span> We Build, Together We Grow
+                </h2>
+            </div>
+
+            <!-- Our Story (main narrative) -->
+            <div class="story-card">
+                <div class="story-text">
+                    "Kaliganj Hands is a community service organization founded with a simple belief — even a small act of kindness can bring <strong>meaningful change</strong> in people's lives."
+                </div>
+                <div class="story-author">
+                    — founded in Kaliganj, with love ❤️
+                </div>
+            </div>
+
+            <!-- Three Core Sections: Our Story (extended), Purpose, Vision 
+                 (Note: আমরা story card এ main story দেখিয়েছি, এখন তিনটি আলাদা কার্ডে আরও বিস্তারিত দিচ্ছি) -->
+            <div class="about-grid">
+                <!-- Card 1: Our Story (Detailed) -->
+                <div class="about-card">
+                    <div class="card-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h3 class="card-title">Our Story</h3>
+                    <p class="card-description">
+                        It started in 2020 when a few friends in Kaliganj decided to feed hungry families during the pandemic. That small spark grew into a movement. Today, we are hundreds of hands working together.
+                    </p>
+                </div>
+
+                <!-- Card 2: Our Purpose -->
+                <div class="about-card">
+                    <div class="card-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="card-title">Our Purpose</h3>
+                    <p class="card-description">
+                        We exist to bridge the gap between those who want to help and those who need it. Every project, every campaign is designed to bring dignity, opportunity, and hope to the underprivileged.
+                    </p>
+                </div>
+
+                <!-- Card 3: Our Vision -->
+                <div class="about-card">
+                    <div class="card-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3 class="card-title">Our Vision</h3>
+                    <p class="card-description">
+                        A self-reliant Kaliganj where no child sleeps hungry, every elderly feels cared for, and every young mind gets the chance to shine. We dream of a better tomorrow — and we work for it today.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Optional: Quick Impact Stats (trust builder) -->
+            <div class="about-stats">
+                <div class="stat-item">
+                    <div class="stat-number">4+</div>
+                    <div class="stat-label">Years of Service</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Villages Reached</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2000+</div>
+                    <div class="stat-label">Lives Touched</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Next section (just a separator) -->
+    <section style="padding: 2rem; text-align: center; background: #f9f9f9;">
+        <p style="color: #aaa;">⬆️ About section complete — next: programs / impact / contact</p>
+    </section>
+</body>
+</html>

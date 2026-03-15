@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaliganj Hands · Our Service Areas</title>
+    <!-- Fonts & Icons (consistent with previous sections) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1e2a2f;
+            line-height: 1.6;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #fef9f2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #FF7F3E;
+            text-transform: uppercase;
+            background: rgba(255, 127, 62, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 127, 62, 0.2);
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #1E2A2F;
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            line-height: 1.2;
+        }
+
+        .section-title span {
+            color: #FF7F3E;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 215, 0, 0.25);
+            z-index: -1;
+            border-radius: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #4a5c62;
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        /* Services Grid - 3 Cards */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            margin: 3rem 0 4rem;
+        }
+
+        /* Service Card */
+        .service-card {
+            background: white;
+            border-radius: 30px 12px 30px 12px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 35px -10px rgba(255, 127, 62, 0.12);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 127, 62, 0.1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 35px 50px -15px rgba(255, 127, 62, 0.3);
+            border-color: rgba(255, 127, 62, 0.3);
+        }
+
+        /* Card Background Pattern (premium subtle) */
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, transparent 50%, rgba(255, 127, 62, 0.03) 50%);
+            border-radius: 0 0 0 120px;
+            z-index: 0;
+        }
+
+        /* Card Icon */
+        .service-icon {
+            width: 90px;
+            height: 90px;
+            background: linear-gradient(145deg, #FF7F3E, #FF9F5C);
+            border-radius: 24px 6px 24px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+            box-shadow: 0 20px 25px -8px #FF7F3E;
+            position: relative;
+            z-index: 2;
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .service-icon i {
+            font-size: 3.2rem;
+            color: white;
+        }
+
+        /* Card Title */
+        .service-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1E2A2F;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.5px;
+            position: relative;
+            z-index: 2;
+            border-bottom: 3px solid rgba(255, 127, 62, 0.2);
+            padding-bottom: 0.8rem;
+            display: inline-block;
+        }
+
+        /* Service List */
+        .service-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.2rem;
+            font-size: 1.1rem;
+            color: #4a5c62;
+            transition: transform 0.2s ease;
+        }
+
+        .service-list li:hover {
+            transform: translateX(5px);
+            color: #FF7F3E;
+        }
+
+        .service-list li i {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FF7F3E;
+            font-size: 1.2rem;
+            background: rgba(255, 127, 62, 0.1);
+            border-radius: 50%;
+            padding: 0.4rem;
+        }
+
+        /* Card Footer / Count Badge */
+        .card-badge {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: #7f8c8d;
+            background: rgba(255, 127, 62, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            width: fit-content;
+            border: 1px solid rgba(255, 127, 62, 0.1);
+        }
+
+        .card-badge i {
+            color: #4CAF50;
+            font-size: 1rem;
+        }
+
+        /* CTA Section */
+        .services-cta {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 3rem;
+            background: linear-gradient(145deg, #FF7F3E, #FF9F5C);
+            border-radius: 40px 12px 40px 12px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-cta h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .services-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: white;
+            color: #FF7F3E;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 25px -8px rgba(0,0,0,0.2);
+            border: 2px solid transparent;
+            position: relative;
+            z-index: 2;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 20px 30px -8px rgba(0,0,0,0.3);
+        }
+
+        .cta-button i {
+            transition: transform 0.2s ease;
+        }
+
+        .cta-button:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Background Shapes */
+        .service-shape-1 {
+            position: absolute;
+            top: 50px;
+            right: -50px;
+            width: 300px;
+            height: 300px;
+            background: #FFD93D;
+            opacity: 0.07;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: 0;
+        }
+
+        .service-shape-2 {
+            position: absolute;
+            bottom: 100px;
+            left: -80px;
+            width: 280px;
+            height: 280px;
+            background: #4CAF50;
+            opacity: 0.07;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            filter: blur(70px);
+            z-index: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1000px) {
+            .services-grid {
+                gap: 1.8rem;
+            }
+            .service-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .services-section {
+                padding: 4rem 1.5rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .service-card {
+                padding: 2rem 1.5rem;
+            }
+            .service-icon {
+                width: 75px;
+                height: 75px;
+            }
+            .service-icon i {
+                font-size: 2.5rem;
+            }
+            .service-title {
+                font-size: 1.8rem;
+            }
+            .services-cta {
+                padding: 2rem 1.5rem;
+            }
+            .services-cta h3 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="services-section">
+        <!-- Background Shapes -->
+        <div class="service-shape-1"></div>
+        <div class="service-shape-2"></div>
+
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <div class="section-tag">
+                    <i class="fas fa-hand-holding-heart"></i> What We Do
+                </div>
+                <h2 class="section-title">
+                    <span>Our Service</span> Areas
+                </h2>
+                <div class="section-subtitle">
+                    Serving Kaliganj with love, care, and dedication
+                </div>
+            </div>
+
+            <!-- Services Grid - 3 Cards -->
+            <div class="services-grid">
+                <!-- Card 1: Healthcare Support -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-hospital-alt"></i>
+                    </div>
+                    <h3 class="service-title">🏥 Healthcare Support</h3>
+                    <ul class="service-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Free health camps
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Medical awareness
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Medicine support
+                        </li>
+                    </ul>
+                    <div class="card-badge">
+                        <i class="fas fa-heart"></i> 500+ patients helped
+                    </div>
+                </div>
+
+                <!-- Card 2: Education Support -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="service-title">📚 Education Support</h3>
+                    <ul class="service-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Scholarships
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Book distribution
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Student assistance
+                        </li>
+                    </ul>
+                    <div class="card-badge">
+                        <i class="fas fa-heart"></i> 200+ students supported
+                    </div>
+                </div>
+
+                <!-- Card 3: Community Support -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-people-arrows"></i>
+                    </div>
+                    <h3 class="service-title">🏘 Community Support</h3>
+                    <ul class="service-list">
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Helping helpless families
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Elderly care
+                        </li>
+                        <li>
+                            <i class="fas fa-check-circle"></i>
+                            Women empowerment
+                        </li>
+                    </ul>
+                    <div class="card-badge">
+                        <i class="fas fa-heart"></i> 150+ families supported
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="services-cta">
+                <h3>Want to Support Our Services?</h3>
+                <p>Your small contribution can bring a smile to someone's face.</p>
+                <a href="#" class="cta-button">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    Get Involved Today
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+                <!-- Background Pattern (subtle) -->
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%); pointer-events: none;"></div>
+            </div>
+
+            <!-- Quick Stats Row (optional) -->
+            <div style="display: flex; justify-content: center; gap: 3rem; margin-top: 3rem; flex-wrap: wrap;">
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #FF7F3E;">12+</div>
+                    <div style="font-size: 0.9rem; color: #7f8c8d; text-transform: uppercase;">Health Camps</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #FF7F3E;">8+</div>
+                    <div style="font-size: 0.9rem; color: #7f8c8d; text-transform: uppercase;">Schools Reached</div>
+                </div>
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; font-weight: 700; color: #FF7F3E;">5+</div>
+                    <div style="font-size: 0.9rem; color: #7f8c8d; text-transform: uppercase;">Women's Groups</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Next Section Placeholder -->
+    <section style="padding: 2rem; text-align: center; background: #f9f9f9;">
+        <p style="color: #aaa;">⬆️ Service Areas complete — next: impact / team / contact</p>
+    </section>
+</body>
+</html>

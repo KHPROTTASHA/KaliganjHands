@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kaliganj Hands · Activities & Programs</title>
+    <!-- Fonts & Icons (consistent) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: #1e2a2f;
+            line-height: 1.6;
+        }
+
+        /* Activities Section */
+        .activities-section {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, #fef9f2 0%, #ffffff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Section Header */
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: #FF7F3E;
+            text-transform: uppercase;
+            background: rgba(255, 127, 62, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 127, 62, 0.2);
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: #1E2A2F;
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            line-height: 1.2;
+        }
+
+        .section-title span {
+            color: #FF7F3E;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: rgba(255, 215, 0, 0.25);
+            z-index: -1;
+            border-radius: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: #4a5c62;
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        /* Activities Grid */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem;
+            margin: 3rem 0 4rem;
+        }
+
+        /* Activity Card */
+        .activity-card {
+            background: white;
+            border-radius: 30px 12px 30px 12px;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -10px rgba(255, 127, 62, 0.15);
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 127, 62, 0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            backdrop-filter: blur(5px);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 35px 50px -15px rgba(255, 127, 62, 0.3);
+            border-color: rgba(255, 127, 62, 0.3);
+        }
+
+        /* Card Image */
+        .card-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .activity-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        /* Image Overlay Badge (date/location) */
+        .image-badge {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(255, 127, 62, 0.9);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 2;
+        }
+
+        .image-badge i {
+            font-size: 0.8rem;
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .activity-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1E2A2F;
+            margin-bottom: 1rem;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-title i {
+            color: #FF7F3E;
+            font-size: 1.8rem;
+        }
+
+        .activity-description {
+            font-size: 1.1rem;
+            color: #4a5c62;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        /* Activity Stats (like people helped) */
+        .activity-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 127, 62, 0.15);
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95rem;
+            color: #7f8c8d;
+        }
+
+        .stat i {
+            color: #4CAF50;
+            font-size: 1rem;
+        }
+
+        .stat strong {
+            color: #FF7F3E;
+            font-weight: 700;
+        }
+
+        /* Read More Link */
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #FF7F3E;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: auto;
+            transition: gap 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 12px;
+            color: #e5672a;
+        }
+
+        .read-more i {
+            font-size: 0.9rem;
+        }
+
+        /* View All Button */
+        .view-all-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(145deg, #FF7F3E, #FF9F5C);
+            color: white;
+            padding: 1rem 2.8rem;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 30px -10px #FF7F3E;
+            border: 2px solid transparent;
+        }
+
+        .view-all-btn:hover {
+            background: transparent;
+            color: #FF7F3E;
+            border-color: #FF7F3E;
+            transform: translateY(-5px);
+            box-shadow: 0 25px 35px -12px #FF7F3E;
+        }
+
+        .view-all-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .view-all-btn:hover i {
+            transform: translateX(5px);
+        }
+
+        /* Background Shapes */
+        .activity-shape-1 {
+            position: absolute;
+            top: 150px;
+            right: -30px;
+            width: 280px;
+            height: 280px;
+            background: #FFD93D;
+            opacity: 0.07;
+            border-radius: 50%;
+            filter: blur(70px);
+            z-index: 0;
+        }
+
+        .activity-shape-2 {
+            position: absolute;
+            bottom: 80px;
+            left: -50px;
+            width: 300px;
+            height: 300px;
+            background: #4CAF50;
+            opacity: 0.07;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            filter: blur(70px);
+            z-index: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .activities-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .card-image {
+                height: 220px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .activities-section {
+                padding: 4rem 1.5rem;
+            }
+            .section-title {
+                font-size: 2rem;
+            }
+            .activity-title {
+                font-size: 1.5rem;
+            }
+            .activity-description {
+                font-size: 1rem;
+            }
+            .activity-stats {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .view-all-btn {
+                padding: 0.9rem 2rem;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="activities-section">
+        <!-- Background Shapes -->
+        <div class="activity-shape-1"></div>
+        <div class="activity-shape-2"></div>
+
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header">
+                <div class="section-tag">
+                    <i class="fas fa-calendar-alt"></i> Our Work in Action
+                </div>
+                <h2 class="section-title">
+                    <span>Activities</span> & Programs
+                </h2>
+                <div class="section-subtitle">
+                    Real impact, real stories from Kaliganj
+                </div>
+            </div>
+
+            <!-- Activities Grid - 4 Cards (2 rows x 2 columns) -->
+            <div class="activities-grid">
+                <!-- Activity 1: Winter Clothes Distribution -->
+                <div class="activity-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1544027993-37dbfe44362b?q=80&w=2940&auto=format&fit=crop" alt="Winter clothes distribution">
+                        <div class="image-badge">
+                            <i class="fas fa-map-marker-alt"></i> Kaliganj, 2024
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="activity-title">
+                            <i class="fas fa-tshirt"></i> Winter Clothes Distribution
+                        </h3>
+                        <p class="activity-description">
+                            Distributed warm clothes to 300+ underprivileged families in remote villages of Kaliganj. Each family received blankets, sweaters, and winter essentials.
+                        </p>
+                        <div class="activity-stats">
+                            <div class="stat">
+                                <i class="fas fa-users"></i> <strong>320+</strong> families
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-boxes"></i> <strong>5</strong> villages
+                            </div>
+                        </div>
+                        <a href="#" class="read-more">
+                            See more <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Activity 2: Health Camp -->
+                <div class="activity-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1584516150909-c43483ee7932?q=80&w=2940&auto=format&fit=crop" alt="Free health camp">
+                        <div class="image-badge">
+                            <i class="fas fa-map-marker-alt"></i> Kaliganj Bazar
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="activity-title">
+                            <i class="fas fa-stethoscope"></i> Free Health Camp
+                        </h3>
+                        <p class="activity-description">
+                            Organized a day-long free medical camp with 5 specialist doctors. Provided checkups, medicines, and health awareness sessions to 450+ patients.
+                        </p>
+                        <div class="activity-stats">
+                            <div class="stat">
+                                <i class="fas fa-user-md"></i> <strong>5</strong> doctors
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-pills"></i> <strong>450+</strong> patients
+                            </div>
+                        </div>
+                        <a href="#" class="read-more">
+                            See more <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Activity 3: Scholarship Program -->
+                <div class="activity-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2940&auto=format&fit=crop" alt="Scholarship program">
+                        <div class="image-badge">
+                            <i class="fas fa-map-marker-alt"></i> Kaliganj School
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="activity-title">
+                            <i class="fas fa-graduation-cap"></i> Scholarship Program
+                        </h3>
+                        <p class="activity-description">
+                            Awarded scholarships to 50 meritorious but underprivileged students. Each student received financial support for school fees and study materials.
+                        </p>
+                        <div class="activity-stats">
+                            <div class="stat">
+                                <i class="fas fa-user-graduate"></i> <strong>50</strong> students
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-school"></i> <strong>8</strong> schools
+                            </div>
+                        </div>
+                        <a href="#" class="read-more">
+                            See more <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Activity 4: Relief Distribution -->
+                <div class="activity-card">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2940&auto=format&fit=crop" alt="Relief distribution">
+                        <div class="image-badge">
+                            <i class="fas fa-map-marker-alt"></i> Flood Affected Areas
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <h3 class="activity-title">
+                            <i class="fas fa-hand-holding-heart"></i> Relief Distribution
+                        </h3>
+                        <p class="activity-description">
+                            During recent floods, distributed dry food, clean water, and emergency supplies to 200+ families in 3 worst-hit villages of Kaliganj.
+                        </p>
+                        <div class="activity-stats">
+                            <div class="stat">
+                                <i class="fas fa-users"></i> <strong>200+</strong> families
+                            </div>
+                            <div class="stat">
+                                <i class="fas fa-box-open"></i> <strong>800+</strong> food packs
+                            </div>
+                        </div>
+                        <a href="#" class="read-more">
+                            See more <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View All Button -->
+            <div class="view-all-container">
+                <a href="#" class="view-all-btn">
+                    View All Activities <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+
+            <!-- Impact Message -->
+            <div style="text-align: center; margin-top: 4rem; padding: 2rem; background: rgba(255, 127, 62, 0.03); border-radius: 50px 12px 50px 12px;">
+                <p style="font-size: 1.2rem; color: #4a5c62; font-style: italic;">
+                    <i class="fas fa-quote-left" style="color: #FF7F3E; opacity: 0.5; margin-right: 8px;"></i>
+                    Every activity is a step toward our dream of a stronger Kaliganj.
+                    <i class="fas fa-quote-right" style="color: #FF7F3E; opacity: 0.5; margin-left: 8px;"></i>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Next Section Placeholder -->
+    <section style="padding: 2rem; text-align: center; background: #f9f9f9;">
+        <p style="color: #aaa;">⬆️ Activities & Programs complete — next: Get Involved / Contact</p>
+    </section>
+</body>
+</html>
