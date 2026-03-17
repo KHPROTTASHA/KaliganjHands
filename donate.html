@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Kaliganj Hands · Support Our Mission</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #FF7F3E;
+            --primary-dark: #e5672a;
+            --primary-light: #FF9F5C;
+            --secondary-gold: #FFD93D;
+            --secondary-green: #4CAF50;
+            --dark: #1E2A2F;
+            --gray: #4a5c62;
+            --light-gray: #7f8c8d;
+            --off-white: #fef9f2;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(145deg, var(--primary), var(--primary-light));
+            --gradient-warm: linear-gradient(135deg, #fffaf0, #ffe9d6);
+            --shadow-sm: 0 10px 30px -15px rgba(0,0,0,0.1);
+            --shadow-md: 0 20px 40px -20px rgba(255, 127, 62, 0.3);
+            --shadow-lg: 0 30px 60px -20px rgba(255, 127, 62, 0.4);
+            --border-radius: 30px 12px 30px 12px;
+            --border-radius-sm: 20px 8px 20px 8px;
+            --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--white);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 5;
+            width: 100%;
+        }
+
+        /* ===== BACKGROUND SHAPES ===== */
+        .shape {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: 0;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .shape-1 {
+            top: -100px;
+            right: -100px;
+            background: var(--primary);
+            animation: float 15s infinite;
+        }
+
+        .shape-2 {
+            bottom: -100px;
+            left: -100px;
+            background: var(--secondary-green);
+            animation: float 18s infinite reverse;
+        }
+
+        .shape-3 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--secondary-gold);
+            opacity: 0.05;
+            filter: blur(150px);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* ===== NAVBAR (fully responsive) ===== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 1.5rem;
+            transition: var(--transition);
+            background: transparent;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+            padding: 0.7rem 1.5rem;
+        }
+
+        .navbar .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0;
+        }
+
+        .navbar-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            text-decoration: none;
+        }
+
+        .navbar-logo .logo-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+        }
+
+        .navbar-logo .logo-icon span {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        .navbar-logo:hover .logo-icon {
+            transform: rotate(5deg) scale(1.05);
+        }
+
+        .navbar-logo .logo-text {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--dark);
+            letter-spacing: -0.5px;
+        }
+
+        .navbar.scrolled .navbar-logo .logo-text {
+            color: var(--dark);
+        }
+
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            font-size: 1rem;
+            transition: var(--transition);
+            position: relative;
+            padding: 0.5rem 0;
+            white-space: nowrap;
+        }
+
+        .navbar.scrolled .nav-link {
+            color: var(--dark);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--primary);
+        }
+
+        .nav-donate {
+            background: var(--gradient-primary);
+            color: white !important;
+            padding: 0.6rem 1.8rem !important;
+            border-radius: 50px;
+            box-shadow: 0 10px 20px -8px var(--primary);
+        }
+
+        .nav-donate::after {
+            display: none;
+        }
+
+        .nav-donate:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px -8px var(--primary);
+        }
+
+        /* Active link premium style */
+        .nav-link.active {
+            color: var(--primary);
+            font-weight: 600;
+            text-shadow: 0 0 8px rgba(255, 127, 62, 0.3);
+        }
+
+        /* Hamburger menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 6px;
+            z-index: 1001;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 28px;
+            height: 3px;
+            background: var(--dark);
+            transition: var(--transition);
+            border-radius: 10px;
+        }
+
+        .navbar.scrolled .hamburger span {
+            background: var(--dark);
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: var(--gradient-warm);
+            overflow: hidden;
+            padding-top: 90px;
+            padding-bottom: 60px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><path d="M30 5 L55 30 L30 55 L5 30 Z" fill="%23FF7F3E" fill-opacity="0.03"/></svg>');
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .kh-logo {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            box-shadow: var(--shadow-lg);
+            animation: pulseGlow 3s infinite;
+        }
+
+        .kh-logo span {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -2px;
+            text-shadow: 2px 4px 10px rgba(0,0,0,0.1);
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255, 127, 62, 0.3); }
+            50% { box-shadow: 0 0 30px 10px rgba(255, 127, 62, 0.2); }
+        }
+
+        .hero-tagline {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            color: var(--gray);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .hero-tagline i {
+            color: var(--primary);
+            font-size: 2rem;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            letter-spacing: -2px;
+        }
+
+        .hero-highlight {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 0;
+            width: 100%;
+            height: 15px;
+            background: rgba(255, 217, 0, 0.3);
+            z-index: -1;
+            border-radius: 20px;
+        }
+
+        .hero-description {
+            font-size: 1.3rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 2rem auto 3rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem 2rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 127, 62, 0.2);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* ===== SECTION HEADERS ===== */
+        .section-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .section-tag {
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            color: var(--primary);
+            text-transform: uppercase;
+            background: rgba(255, 127, 62, 0.1);
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(255, 127, 62, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .section-title {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: var(--dark);
+            max-width: 800px;
+            margin: 0 auto 1rem;
+            line-height: 1.2;
+            letter-spacing: -1px;
+        }
+
+        .section-title span {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title span::after {
+            content: '';
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background: rgba(255, 217, 0, 0.25);
+            z-index: -1;
+            border-radius: 20px;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+        }
+
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== STORY CARD ===== */
+        .story-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: var(--border-radius);
+            padding: 3.5rem;
+            margin: 2rem 0 4rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(255, 127, 62, 0.15);
+            position: relative;
+            text-align: center;
+        }
+
+        .story-card::before {
+            content: '“';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 10rem;
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        .story-text {
+            font-size: 1.5rem;
+            line-height: 1.7;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            color: var(--dark);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ===== IMPACT CARDS ===== */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2.5rem 0;
+        }
+
+        .impact-card {
+            background: white;
+            padding: 2.5rem 1.8rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 127, 62, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+
+        .impact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, transparent 50%, rgba(255, 127, 62, 0.05) 50%);
+            border-radius: 0 0 0 100px;
+        }
+
+        .impact-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-primary);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 15px 25px -8px var(--primary);
+        }
+
+        .impact-icon i {
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        .impact-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+        }
+
+        .impact-card p {
+            color: var(--gray);
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        /* ===== DONATION OPTIONS ===== */
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 2.5rem 0;
+        }
+
+        .option-card {
+            background: white;
+            padding: 2.5rem 1.8rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 127, 62, 0.1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .option-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .option-card.selected {
+            border: 2px solid var(--primary);
+            background: linear-gradient(145deg, #fff8f0, white);
+        }
+
+        .option-amount {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 0.8rem;
+            line-height: 1;
+        }
+
+        .option-amount small {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--gray);
+        }
+
+        .option-description {
+            color: var(--gray);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .option-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            background: rgba(255, 127, 62, 0.1);
+            border-radius: 50px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        /* ===== DONATE BUTTON (centered) ===== */
+        .donate-button-container {
+            text-align: center;
+            margin: 3rem 0 1.5rem;
+        }
+
+        .donate-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gradient-primary);
+            color: white;
+            padding: 1.2rem 3.5rem;
+            border-radius: 60px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 25px 40px -14px var(--primary);
+            border: 2px solid transparent;
+        }
+
+        .donate-btn:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 35px 50px -18px var(--primary);
+            border-color: white;
+        }
+
+        .donate-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .donate-btn:hover i {
+            transform: translateX(8px);
+        }
+
+        /* ===== ACTIVITIES SECTION (new) ===== */
+        .activities {
+            padding: 6rem 0;
+            background: var(--off-white);
+        }
+
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .activity-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            border: 1px solid rgba(255, 127, 62, 0.1);
+        }
+
+        .activity-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .activity-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+        }
+
+        .activity-image i {
+            font-size: 4rem;
+            color: var(--primary-light);
+            opacity: 0.5;
+        }
+
+        .activity-badge {
+            position: absolute;
+            bottom: 15px;
+            left: 15px;
+            background: rgba(255, 127, 62, 0.9);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .activity-content {
+            padding: 1.8rem;
+        }
+
+        .activity-content h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .activity-content h3 i {
+            color: var(--primary);
+        }
+
+        .activity-content p {
+            color: var(--gray);
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .activity-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin: 1rem 0;
+            padding-top: 0.8rem;
+            border-top: 1px solid rgba(255, 127, 62, 0.1);
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .stat i {
+            color: var(--secondary-green);
+        }
+
+        .stat strong {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .read-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: gap 0.3s ease;
+        }
+
+        .read-more:hover {
+            gap: 12px;
+        }
+
+        /* ===== GALLERY SECTION (new) ===== */
+        .gallery {
+            padding: 6rem 0;
+            background: var(--white);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            aspect-ratio: 1;
+            cursor: pointer;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-item i {
+            font-size: 3rem;
+            color: var(--primary-light);
+            opacity: 0.5;
+        }
+
+        .gallery-category {
+            position: absolute;
+            top: 0.8rem;
+            right: 0.8rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--primary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            z-index: 2;
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(255, 127, 62, 0.95), transparent);
+            color: white;
+            padding: 1.5rem 1rem;
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-overlay p {
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* ===== VOLUNTEER SECTION (new) ===== */
+        .volunteer {
+            padding: 6rem 0;
+            background: var(--gradient-primary);
+            position: relative;
+            overflow: hidden;
+            color: white;
+        }
+
+        .volunteer::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        .volunteer::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255,217,0,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 15s infinite reverse;
+        }
+
+        .volunteer-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 5;
+        }
+
+        .volunteer-icon {
+            width: 100px;
+            height: 100px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 2rem;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            font-size: 3.5rem;
+            color: white;
+        }
+
+        .volunteer h2 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            letter-spacing: -1px;
+        }
+
+        .volunteer p {
+            font-size: 1.3rem;
+            line-height: 1.7;
+            margin-bottom: 2.5rem;
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            opacity: 0.95;
+        }
+
+        .volunteer-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            color: var(--primary);
+            padding: 1rem 2.8rem;
+            border-radius: 60px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: var(--transition);
+            box-shadow: 0 30px 40px -15px rgba(0,0,0,0.2);
+            border: 2px solid transparent;
+        }
+
+        .volunteer-btn:hover {
+            background: transparent;
+            color: white;
+            border-color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 40px 50px -15px rgba(0,0,0,0.3);
+        }
+
+        .volunteer-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .volunteer-btn:hover i {
+            transform: translateX(6px);
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        .contact {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--off-white), var(--white));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin-top: 2.5rem;
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .contact-info {
+            padding: 3rem;
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .contact-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            letter-spacing: -0.5px;
+        }
+
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 0.8rem 1.2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius-sm);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        .contact-detail:hover {
+            transform: translateX(10px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-detail i {
+            font-size: 1.5rem;
+            width: 35px;
+        }
+
+        .contact-detail p {
+            font-size: 1rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .contact-social {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .social-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: var(--border-radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.4rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+        }
+
+        .social-icon:hover {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-5px) rotate(3deg);
+        }
+
+        .contact-map {
+            padding: 2.5rem;
+        }
+
+        .contact-map h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.2rem;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 280px;
+            border-radius: var(--border-radius-sm);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 3px solid white;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* ===== MODAL (fully responsive) ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 1rem;
+        }
+
+        .modal-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            max-width: 650px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow-lg), inset 0 1px 3px white;
+            border: 1px solid rgba(255,255,255,0.6);
+            animation: floatIn 0.4s cubic-bezier(0.2, 0.9, 0.3, 1);
+            position: relative;
+        }
+
+        @keyframes floatIn {
+            0% { opacity: 0; transform: translateY(30px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            font-size: 2.2rem;
+            cursor: pointer;
+            color: var(--gray);
+            transition: 0.2s;
+            line-height: 1;
+            background: rgba(0,0,0,0.03);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+            background: rgba(255,127,62,0.1);
+            transform: rotate(90deg);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.9rem 1.2rem;
+            border: 2px solid rgba(255,127,62,0.2);
+            border-radius: 50px;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+            box-shadow: inset 0 3px 8px #00000008;
+        }
+
+        .form-group input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 10px 20px -14px var(--primary);
+        }
+
+        .amount-presets {
+            display: flex;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin: 1rem 0 0.5rem;
+        }
+
+        .preset-chip {
+            background: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: 1px solid #ffe0cf;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .preset-chip:hover,
+        .preset-chip.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 10px 18px -12px var(--primary);
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .payment-radio {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.9rem 1.2rem;
+            border: 2px solid rgba(255,127,62,0.2);
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: white;
+        }
+
+        .payment-radio.selected {
+            border-color: var(--primary);
+            background: #fff4e9;
+            box-shadow: 0 5px 15px -10px var(--primary);
+        }
+
+        .payment-radio input[type="radio"] {
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+        }
+
+        .payment-details-box {
+            background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(5px);
+            padding: 1.5rem;
+            border-radius: var(--border-radius-sm);
+            margin: 1.2rem 0;
+            border-left: 6px solid var(--primary);
+            box-shadow: var(--shadow-sm);
+            font-size: 1rem;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1rem 1.8rem;
+            border: none;
+            border-radius: 70px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-top: 0.7rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 18px 30px -16px var(--primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 35px -16px var(--primary);
+        }
+
+        .btn-secondary {
+            background: rgba(0,0,0,0.04);
+            color: var(--dark);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0,0,0,0.08);
+        }
+
+        /* Receipt */
+        .receipt-card {
+            background: linear-gradient(125deg, #ffffff, #fffaf4);
+            border: 2px solid var(--primary-light);
+            border-radius: var(--border-radius);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-lg);
+            margin: 1rem 0 1.5rem;
+        }
+
+        .receipt-icon i {
+            font-size: 4rem;
+            color: var(--secondary-green);
+            filter: drop-shadow(0 10px 12px #c0e0c0);
+        }
+
+        .receipt-field {
+            background: rgba(255,245,235,0.7);
+            backdrop-filter: blur(4px);
+            border-radius: 60px;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            border: 1px solid #ffe0cf;
+            word-break: break-word;
+        }
+
+        .receipt-field span {
+            font-weight: 700;
+            color: var(--primary);
+            margin-right: 0.5rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 1.8rem;
+            text-align: center;
+            font-size: 0.95rem;
+            border-top: 4px solid var(--primary);
+        }
+
+        /* ===== RESPONSIVE BREAKPOINTS ===== */
+        @media (max-width: 1100px) {
+            .hero-title { font-size: 4rem; }
+            .section-title { font-size: 2.8rem; }
+        }
+
+        @media (max-width: 900px) {
+            .hero-title { font-size: 3.5rem; }
+            .hero-tagline { font-size: 1.4rem; }
+            
+            .impact-grid, .options-grid, .gallery-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 1.5rem;
+            }
+
+            .activities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-wrapper { 
+                grid-template-columns: 1fr; 
+            }
+
+            /* Mobile navigation */
+            .nav-menu {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 280px;
+                height: 100vh;
+                background: white;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 1.5rem;
+                transition: right 0.4s ease;
+                box-shadow: var(--shadow-lg);
+                z-index: 1000;
+                padding: 2rem;
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .navbar.scrolled .nav-menu {
+                background: white;
+            }
+
+            .nav-link {
+                font-size: 1.2rem;
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .hero-title { font-size: 3rem; }
+            .section-title { font-size: 2.4rem; }
+            .story-card { padding: 2rem; }
+            .story-text { font-size: 1.3rem; }
+            .volunteer h2 { font-size: 2.5rem; }
+            .volunteer p { font-size: 1.1rem; }
+        }
+
+        @media (max-width: 600px) {
+            .navbar {
+                padding: 0.8rem 1rem;
+            }
+            
+            .navbar.scrolled {
+                padding: 0.6rem 1rem;
+            }
+
+            .navbar-logo .logo-icon {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .navbar-logo .logo-icon span {
+                font-size: 1.4rem;
+            }
+
+            .navbar-logo .logo-text {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 80px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-tagline {
+                font-size: 1.2rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+                padding: 1.2rem;
+            }
+
+            .kh-logo {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .kh-logo span {
+                font-size: 2.8rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .impact-grid, .options-grid, .gallery-grid { 
+                grid-template-columns: 1fr; 
+                gap: 1.2rem;
+            }
+
+            .impact-card, .option-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .impact-icon {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .impact-icon i {
+                font-size: 2rem;
+            }
+
+            .impact-card h3 {
+                font-size: 1.5rem;
+            }
+
+            .option-amount {
+                font-size: 2.2rem;
+            }
+
+            .donate-btn {
+                padding: 1rem 2.2rem;
+                font-size: 1.3rem;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .activity-content h3 {
+                font-size: 1.4rem;
+            }
+
+            .volunteer-icon {
+                width: 80px;
+                height: 80px;
+                font-size: 2.8rem;
+            }
+
+            .volunteer h2 {
+                font-size: 2rem;
+            }
+
+            .volunteer-btn {
+                padding: 0.9rem 2rem;
+                font-size: 1.1rem;
+            }
+
+            .contact-info {
+                padding: 2rem;
+            }
+
+            .contact-map {
+                padding: 1.8rem;
+            }
+
+            .map-container {
+                height: 220px;
+            }
+
+            .modal-card {
+                padding: 1.5rem;
+            }
+
+            .preset-chip {
+                padding: 0.5rem 1.2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-tagline {
+                font-size: 1rem;
+                gap: 5px;
+            }
+
+            .hero-tagline i {
+                font-size: 1.5rem;
+            }
+
+            .kh-logo {
+                width: 70px;
+                height: 70px;
+            }
+            
+            .kh-logo span {
+                font-size: 2.2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .section-tag {
+                font-size: 0.85rem;
+                padding: 0.4rem 1rem;
+            }
+
+            .donate-btn {
+                font-size: 1.2rem;
+                padding: 0.9rem 1.8rem;
+            }
+
+            .contact-detail {
+                flex-wrap: wrap;
+            }
+        }
+
+        /* ===== REVEAL ANIMATION ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s ease;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== BACKGROUND SHAPES ===== -->
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+    <div class="shape shape-3"></div>
+
+    <!-- ===== NAVBAR (fully responsive) ===== -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="#" class="navbar-logo">
+                <div class="logo-icon">
+                    <span>KH</span>
+                </div>
+                <span class="logo-text">Kaliganj Hands</span>
+            </a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#activities" class="nav-link">Activities</a></li>
+                <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                <li><a href="#volunteer" class="nav-link">Volunteer</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+                <li><a href="indexxx.html" class="nav-link nav-donate">Donate</a></li>
+            </ul>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content reveal">
+                <div class="kh-logo">
+                    <span>KH</span>
+                </div>
+                <div class="hero-tagline">
+                    <i class="fas fa-heart"></i> Together for a Better Tomorrow
+                </div>
+                <h1 class="hero-title">
+                    <span class="hero-highlight">Support</span> Kaliganj Hands
+                </h1>
+                <p class="hero-description">
+                    Your generosity helps us provide healthcare, education, and community support to those who need it most.
+                </p>
+                <!-- Centered donate button -->
+                <div class="donate-button-container">
+                    <button class="donate-btn" id="openDonateModalBtn">
+                        <span>Donate Now</span> <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+                <p style="margin-top:1.2rem; color:var(--gray); font-size:0.95rem;">You can also choose an amount below</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WHY DONATE (ABOUT) ===== -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">
+                    <i class="fas fa-question-circle"></i> Why Donate
+                </div>
+                <h2 class="section-title">
+                    Your <span>Support Matters</span>
+                </h2>
+            </div>
+
+            <div class="story-card reveal">
+                <div class="story-text">
+                    "Kaliganj Hands is a community-driven service organization dedicated to helping people through healthcare support, education assistance, and community development initiatives. Your contribution creates real impact."
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WHERE YOUR DONATION GOES (SERVICES) ===== -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">
+                    <i class="fas fa-hand-holding-heart"></i> Where Your Money Goes
+                </div>
+                <h2 class="section-title">
+                    Your <span>Donation Impact</span>
+                </h2>
+                <div class="section-subtitle">
+                    Every taka is used to uplift our community
+                </div>
+            </div>
+
+            <div class="impact-grid">
+                <div class="impact-card reveal">
+                    <div class="impact-icon"><i class="fas fa-hospital-alt"></i></div>
+                    <h3>🏥 Healthcare</h3>
+                    <p>Free health camps, medicine support, and health awareness programs.</p>
+                </div>
+                <div class="impact-card reveal">
+                    <div class="impact-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <h3>📚 Education</h3>
+                    <p>Books, scholarships, learning materials for underprivileged students.</p>
+                </div>
+                <div class="impact-card reveal">
+                    <div class="impact-icon"><i class="fas fa-people-arrows"></i></div>
+                    <h3>🏘 Community</h3>
+                    <p>Helping families in need, elderly care, community development.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== DONATION OPTIONS ===== -->
+    <section class="donation-options" id="donate">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">
+                    <i class="fas fa-donate"></i> Choose an Amount
+                </div>
+                <h2 class="section-title">
+                    Make a <span>Donation</span>
+                </h2>
+                <div class="section-subtitle">
+                    Select a gift amount that feels right for you
+                </div>
+            </div>
+
+            <div class="options-grid">
+                <div class="option-card reveal" data-amount="500" onclick="selectAmount(500)">
+                    <div class="option-amount">৳500 <small>BDT</small></div>
+                    <p class="option-description">Help provide educational materials for one student</p>
+                    <span class="option-badge">📚 Books & Supplies</span>
+                </div>
+                <div class="option-card reveal" data-amount="1000" onclick="selectAmount(1000)">
+                    <div class="option-amount">৳1000 <small>BDT</small></div>
+                    <p class="option-description">Support a health awareness program in a village</p>
+                    <span class="option-badge">🏥 Health Camp</span>
+                </div>
+                <div class="option-card reveal" data-amount="3000" onclick="selectAmount(3000)">
+                    <div class="option-amount">৳3000 <small>BDT</small></div>
+                    <p class="option-description">Assist a family in need with essentials for a month</p>
+                    <span class="option-badge">🏘 Family Support</span>
+                </div>
+            </div>
+
+            <!-- Second donate button -->
+            <div class="donate-button-container reveal">
+                <button class="donate-btn" id="openDonateModalBtn2">
+                    <span>Donate Now</span> <i class="fas fa-arrow-right"></i>
+                </button>
+                <p style="margin-top:1rem; color:var(--gray); font-size:0.9rem;">You can also enter a custom amount in the next step</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ACTIVITIES SECTION (new) ===== -->
+    <section class="activities" id="activities">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">
+                    <i class="fas fa-calendar-alt"></i> Our Work in Action
+                </div>
+                <h2 class="section-title">
+                    <span>Activities</span> & Programs
+                </h2>
+                <div class="section-subtitle">
+                    Real impact, real stories from Kaliganj
+                </div>
+            </div>
+
+            <div class="activities-grid">
+                <div class="activity-card reveal">
+                    <div class="activity-image">
+                        <i class="fas fa-tshirt"></i>
+                        <span class="activity-badge"><i class="fas fa-map-marker-alt"></i> Kaliganj, 2024</span>
+                    </div>
+                    <div class="activity-content">
+                        <h3><i class="fas fa-tshirt"></i> Winter Distribution</h3>
+                        <p>Distributed warm clothes to 320+ underprivileged families in remote villages of Kaliganj.</p>
+                        <div class="activity-stats">
+                            <span class="stat"><i class="fas fa-users"></i> <strong>320+</strong> families</span>
+                            <span class="stat"><i class="fas fa-boxes"></i> <strong>5</strong> villages</span>
+                        </div>
+                        <a href="#" class="read-more">See more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="activity-card reveal">
+                    <div class="activity-image">
+                        <i class="fas fa-stethoscope"></i>
+                        <span class="activity-badge"><i class="fas fa-map-marker-alt"></i> Kaliganj Bazar</span>
+                    </div>
+                    <div class="activity-content">
+                        <h3><i class="fas fa-stethoscope"></i> Free Health Camp</h3>
+                        <p>Day-long free medical camp with 5 doctors. Checkups & medicines for 450+ patients.</p>
+                        <div class="activity-stats">
+                            <span class="stat"><i class="fas fa-user-md"></i> <strong>5</strong> doctors</span>
+                            <span class="stat"><i class="fas fa-pills"></i> <strong>450+</strong> patients</span>
+                        </div>
+                        <a href="#" class="read-more">See more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="activity-card reveal">
+                    <div class="activity-image">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span class="activity-badge"><i class="fas fa-map-marker-alt"></i> Kaliganj School</span>
+                    </div>
+                    <div class="activity-content">
+                        <h3><i class="fas fa-graduation-cap"></i> Scholarship Program</h3>
+                        <p>Scholarships to 50 meritorious students with financial support for school fees.</p>
+                        <div class="activity-stats">
+                            <span class="stat"><i class="fas fa-user-graduate"></i> <strong>50</strong> students</span>
+                            <span class="stat"><i class="fas fa-school"></i> <strong>8</strong> schools</span>
+                        </div>
+                        <a href="#" class="read-more">See more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+
+                <div class="activity-card reveal">
+                    <div class="activity-image">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <span class="activity-badge"><i class="fas fa-map-marker-alt"></i> Flood Areas</span>
+                    </div>
+                    <div class="activity-content">
+                        <h3><i class="fas fa-hand-holding-heart"></i> Relief Distribution</h3>
+                        <p>Emergency food & supplies to 200+ families in 3 flood-hit villages of Kaliganj.</p>
+                        <div class="activity-stats">
+                            <span class="stat"><i class="fas fa-users"></i> <strong>200+</strong> families</span>
+                            <span class="stat"><i class="fas fa-box-open"></i> <strong>800+</strong> food packs</span>
+                        </div>
+                        <a href="#" class="read-more">See more <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== GALLERY SECTION (new) ===== -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">
+                    <i class="fas fa-camera-retro"></i> Our Moments
+                </div>
+                <h2 class="section-title">
+                    <span>Photo</span> Gallery
+                </h2>
+                <div class="section-subtitle">
+                    See KH in action — through your eyes, through our work
+                </div>
+            </div>
+
+            <div class="gallery-grid">
+                <div class="gallery-item reveal">
+                    <span class="gallery-category">Event</span>
+                    <i class="fas fa-calendar-alt"></i>
+                    <div class="gallery-overlay">
+                        <p><i class="fas fa-calendar"></i> Winter Fundraiser 2024</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item reveal">
+                    <span class="gallery-category">Volunteer</span>
+                    <i class="fas fa-hands-helping"></i>
+                    <div class="gallery-overlay">
+                        <p><i class="fas fa-hand-holding-heart"></i> Volunteers in Action</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item reveal">
+                    <span class="gallery-category">Community</span>
+                    <i class="fas fa-tree"></i>
+                    <div class="gallery-overlay">
+                        <p><i class="fas fa-tree"></i> Tree Plantation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== VOLUNTEER SECTION (new) ===== -->
+    <section class="volunteer" id="volunteer">
+        <div class="container">
+            <div class="volunteer-content reveal">
+                <div class="volunteer-icon">
+                    <i class="fas fa-hands-helping"></i>
+                </div>
+                <h2>Become a Volunteer</h2>
+                <p>Join Kaliganj Hands and become part of a community that believes in service and humanity.</p>
+                <a href="#" class="volunteer-btn">
+                    Join Our Team <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION ===== -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-tag">
+                    <i class="fas fa-phone-alt"></i> Get in Touch
+                </div>
+                <h2 class="section-title">
+                    Questions About <span>Donating?</span>
+                </h2>
+                <div class="section-subtitle">
+                    We'd love to hear from you
+                </div>
+            </div>
+
+            <div class="contact-wrapper reveal">
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    
+                    <div class="contact-detail">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <p><strong>📍 Kaliganj, Jhenaidah</strong><br>Bangladesh</p>
+                    </div>
+
+                    <div class="contact-detail">
+                        <i class="fas fa-globe"></i>
+                        <p><strong>🌐 www.kaliganjhands.com.bd</strong></p>
+                    </div>
+
+                    <div class="contact-detail">
+                        <i class="fas fa-envelope"></i>
+                        <p><strong>📧 kaliganjhands@gmail.com</strong></p>
+                    </div>
+
+                    <div class="contact-detail">
+                        <i class="fas fa-phone-alt"></i>
+                        <p><strong>☎ Hotline: 16XXX</strong></p>
+                    </div>
+
+                    <div class="contact-social">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+
+                <div class="contact-map">
+                    <h3>Find Us Here</h3>
+                    <div class="map-container">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117143.82389854577!2d89.00776151847532!3d23.409585450905705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39ff0e4c1d1b1b1b%3A0x8b0b0b0b0b0b0b0b!2sJhenaidah!5e0!3m2!1sen!2sbd!4v1620000000000!5m2!1sen!2sbd" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2024 Kaliganj Hands (KH). All rights reserved. | Together for a Better Tomorrow</p>
+        </div>
+    </footer>
+
+    <!-- ===== DONATION MODAL ===== -->
+    <div class="modal-overlay" id="donationModal">
+        <div class="modal-card">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            <div id="modalStep1" class="modal-step">
+                <h2 style="margin-bottom:1rem;">💛 Complete your donation</h2>
+                <div class="form-group">
+                    <label>Amount (BDT) <span style="color:red;">*</span></label>
+                    <input type="number" id="donationAmount" min="0.01" step="0.01" value="500" required>
+                    <div class="amount-presets">
+                        <span class="preset-chip" data-chip="100">100</span>
+                        <span class="preset-chip" data-chip="500">500</span>
+                        <span class="preset-chip" data-chip="1000">1000</span>
+                        <span class="preset-chip" data-chip="3000">3000</span>
+                        <span class="preset-chip" data-chip="5000">5000</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Your name (optional)</label>
+                    <input type="text" id="donorName" placeholder="e.g. Rahim">
+                </div>
+                <div class="form-group">
+                    <label>Your address (optional)</label>
+                    <input type="text" id="donorAddress" placeholder="e.g. Kaliganj, Jhenaidah">
+                </div>
+                <div class="form-group">
+                    <label>Select payment method</label>
+                    <div class="payment-options">
+                        <div class="payment-radio" data-method="bKash">
+                            <input type="radio" name="paymentMethod" value="bKash" checked> <span><strong>bKash</strong> (017XXXXXXXX)</span>
+                        </div>
+                        <div class="payment-radio" data-method="Nagad">
+                            <input type="radio" name="paymentMethod" value="Nagad"> <span><strong>Nagad</strong> (018XXXXXXXX)</span>
+                        </div>
+                        <div class="payment-radio" data-method="Rocket">
+                            <input type="radio" name="paymentMethod" value="Rocket"> <span><strong>Rocket</strong> (019XXXXXXXX)</span>
+                        </div>
+                        <div class="payment-radio" data-method="Bank">
+                            <input type="radio" name="paymentMethod" value="Bank"> <span><strong>Bank transfer</strong> (EBL)</span>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn-primary" id="proceedToPaymentBtn">Proceed to payment details</button>
+                <button class="btn-secondary" id="closeModalFromStep1">Cancel</button>
+            </div>
+
+            <div id="modalStep2" class="modal-step" style="display:none;">
+                <h2 style="margin-bottom:1rem;">💳 Payment instructions</h2>
+                <div id="paymentDetailsDisplay" class="payment-details-box"></div>
+                <p style="margin:1rem 0;">After sending money, click below to confirm.</p>
+                <button class="btn-primary" id="confirmPaymentBtn">✅ I have paid — show receipt</button>
+                <button class="btn-secondary" id="backToStep1Btn">← Back</button>
+            </div>
+
+            <div id="modalStep3" class="modal-step" style="display:none;">
+                <div id="receiptContainer"></div>
+                <button class="btn-secondary" id="newDonationBtn">Make another donation</button>
+                <button class="btn-primary" id="downloadPdfBtn" style="margin-top:0.5rem;">📥 Download PDF receipt</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SCRIPTS ===== -->
+    <script>
+        // ---------- global variables ----------
+        let selectedAmount = 500;
+
+        window.selectAmount = function(amount) {
+            selectedAmount = amount;
+            document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            const amtInput = document.getElementById('donationAmount');
+            if (amtInput) amtInput.value = amount;
+        }
+
+        // ---------- modal elements ----------
+        const modal = document.getElementById('donationModal');
+        const openBtn = document.getElementById('openDonateModalBtn');
+        const openBtn2 = document.getElementById('openDonateModalBtn2');
+        const closeBtn = document.getElementById('closeModalBtn');
+        const closeStep1Btn = document.getElementById('closeModalFromStep1');
+        const step1 = document.getElementById('modalStep1');
+        const step2 = document.getElementById('modalStep2');
+        const step3 = document.getElementById('modalStep3');
+        const proceedBtn = document.getElementById('proceedToPaymentBtn');
+        const backBtn = document.getElementById('backToStep1Btn');
+        const confirmBtn = document.getElementById('confirmPaymentBtn');
+        const newDonationBtn = document.getElementById('newDonationBtn');
+        const downloadBtn = document.getElementById('downloadPdfBtn');
+
+        const amountInput = document.getElementById('donationAmount');
+        const nameInput = document.getElementById('donorName');
+        const addressInput = document.getElementById('donorAddress');
+        const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
+
+        // preset chips inside modal
+        document.querySelectorAll('.preset-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                let val = this.getAttribute('data-chip');
+                amountInput.value = val;
+                selectedAmount = parseFloat(val);
+                document.querySelectorAll('.preset-chip').forEach(c => c.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        function openModal() {
+            amountInput.value = selectedAmount;
+            step1.style.display = 'block';
+            step2.style.display = 'none';
+            step3.style.display = 'none';
+            modal.style.display = 'flex';
+        }
+
+        openBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openModal();
+        });
+        if (openBtn2) {
+            openBtn2.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
+            });
+        }
+
+        function closeModal() { modal.style.display = 'none'; }
+        closeBtn.addEventListener('click', closeModal);
+        closeStep1Btn.addEventListener('click', closeModal);
+        window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+        proceedBtn.addEventListener('click', () => {
+            const amount = parseFloat(amountInput.value);
+            if (!amount || amount <= 0) { alert('Please enter a valid amount (at least 0.01 BDT)'); return; }
+            selectedAmount = amount;
+
+            let selectedMethod = 'bKash';
+            for (let radio of paymentRadios) { if (radio.checked) { selectedMethod = radio.value; break; } }
+
+            const detailsDiv = document.getElementById('paymentDetailsDisplay');
+            let detailsHtml = '';
+            if (selectedMethod === 'bKash') { detailsHtml = `<p><strong>bKash (Merchant)</strong></p><p>017XXXXXXXX (Personal)</p><p>Send ৳${amount} to this number</p>`; }
+            else if (selectedMethod === 'Nagad') { detailsHtml = `<p><strong>Nagad</strong></p><p>018XXXXXXXX (Personal)</p><p>Send ৳${amount} to this number</p>`; }
+            else if (selectedMethod === 'Rocket') { detailsHtml = `<p><strong>Rocket</strong></p><p>019XXXXXXXX (Personal)</p><p>Send ৳${amount} to this number</p>`; }
+            else { detailsHtml = `<p><strong>Bank Transfer (EBL)</strong></p><p>A/C: Kaliganj Hands<br>123-456789-01<br>Routing: 254768923</p><p>Amount: ৳${amount}</p>`; }
+            detailsDiv.innerHTML = detailsHtml;
+
+            step1.style.display = 'none';
+            step2.style.display = 'block';
+        });
+
+        backBtn.addEventListener('click', () => {
+            step2.style.display = 'none';
+            step1.style.display = 'block';
+        });
+
+        confirmBtn.addEventListener('click', () => {
+            const amount = parseFloat(amountInput.value) || selectedAmount;
+            const name = nameInput.value.trim();
+            const address = addressInput.value.trim();
+            let method = 'bKash';
+            for (let radio of paymentRadios) { if (radio.checked) method = radio.value; }
+
+            const donation = {
+                id: 'TXN' + Math.floor(Math.random()*1000000),
+                amount: amount,
+                name: name || '😊',
+                address: address || '🌍',
+                method: method,
+                date: new Date().toLocaleString('bn-BD', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'})
+            };
+            window.currentDonation = donation; // for pdf
+
+            let donations = JSON.parse(localStorage.getItem('kaliganj_donations') || '[]');
+            donations.push(donation);
+            localStorage.setItem('kaliganj_donations', JSON.stringify(donations));
+
+            const container = document.getElementById('receiptContainer');
+            container.innerHTML = `
+                <div class="receipt-card">
+                    <div class="receipt-icon"><i class="fas fa-check-circle"></i></div>
+                    <h2 style="color:var(--primary);">✓ Payment recorded</h2>
+                    <p style="margin: 0.5rem 0 1.5rem;">Thank you for your generosity</p>
+                    <div class="receipt-field"><span>Amount</span> ৳${donation.amount} BDT</div>
+                    <div class="receipt-field"><span>Name</span> ${donation.name}</div>
+                    <div class="receipt-field"><span>Address</span> ${donation.address}</div>
+                    <div class="receipt-field"><span>Method</span> ${donation.method}</div>
+                    <div class="receipt-field"><span>Transaction ID</span> ${donation.id}</div>
+                    <div class="receipt-field"><span>Date</span> ${donation.date}</div>
+                    <p style="margin-top:1.5rem; font-size:0.9rem;">receipt saved in local storage</p>
+                </div>
+            `;
+
+            step2.style.display = 'none';
+            step3.style.display = 'block';
+        });
+
+        downloadBtn.addEventListener('click', function() {
+            if (!window.currentDonation) return;
+            const d = window.currentDonation;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFontSize(22); doc.text('Kaliganj Hands', 20, 20);
+            doc.setFontSize(14); doc.text('Donation Receipt', 20, 35);
+            doc.setFontSize(11);
+            doc.text(`Amount: ৳${d.amount} BDT`, 20, 55);
+            doc.text(`Name: ${d.name}`, 20, 65);
+            doc.text(`Address: ${d.address}`, 20, 75);
+            doc.text(`Method: ${d.method}`, 20, 85);
+            doc.text(`Transaction ID: ${d.id}`, 20, 95);
+            doc.text(`Date: ${d.date}`, 20, 105);
+            doc.text('Thank you for supporting!', 20, 125);
+            doc.save(`Kaliganj_receipt_${d.id}.pdf`);
+        });
+
+        newDonationBtn.addEventListener('click', () => {
+            step3.style.display = 'none';
+            step1.style.display = 'block';
+            nameInput.value = '';
+            addressInput.value = '';
+            amountInput.value = 500;
+            selectedAmount = 500;
+            document.querySelector('input[value="bKash"]').checked = true;
+            document.querySelectorAll('.payment-radio').forEach(r => r.classList.remove('selected'));
+            document.querySelector('.payment-radio[data-method="bKash"]').classList.add('selected');
+        });
+
+        // ---------- navbar scroll effect & active link ----------
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+
+            // Active link highlight
+            let sections = document.querySelectorAll('section[id]');
+            let scrollPosition = window.scrollY + 120;
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+                const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    navLink?.classList.add('active');
+                } else {
+                    navLink?.classList.remove('active');
+                }
+            });
+        });
+
+        // Mobile menu
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Scroll reveal
+        window.addEventListener('scroll', reveal);
+        function reveal() {
+            var reveals = document.querySelectorAll('.reveal');
+            for(var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var revealTop = reveals[i].getBoundingClientRect().top;
+                var revealPoint = 150;
+                if(revealTop < windowHeight - revealPoint) {
+                    reveals[i].classList.add('active');
+                }
+            }
+        }
+        window.addEventListener('load', reveal);
+
+        // Highlight selected payment radio
+        document.querySelectorAll('.payment-radio').forEach(div => {
+            div.addEventListener('click', function(e) {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                document.querySelectorAll('.payment-radio').forEach(r => r.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Default selected
+        window.addEventListener('load', () => {
+            document.querySelector('.payment-radio[data-method="bKash"]')?.classList.add('selected');
+            document.querySelector('.option-card')?.classList.add('selected');
+        });
+    </script>
+</body>
+</html>
