@@ -56,31 +56,27 @@
             width: 100%;
         }
 
-        /* ===== NAVBAR (fully responsive) ===== */
+        /* ===== NAVBAR (fully responsive, within container) ===== */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 1rem 1.5rem;
             transition: var(--transition);
             background: transparent;
-        }
-
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(15px);
-            box-shadow: 0 10px 40px -10px rgba(255, 127, 62, 0.2);
-            border-bottom: 1px solid rgba(255, 127, 62, 0.1);
-            padding: 0.7rem 1.5rem;
+            padding: 0; /* padding handled by container */
         }
 
         .navbar .container {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0;
+            padding: 1.2rem 2rem; /* move padding to container */
+        }
+
+        .navbar.scrolled .container {
+            padding: 0.8rem 2rem;
         }
 
         .navbar-logo {
@@ -91,8 +87,8 @@
         }
 
         .navbar-logo .logo-icon {
-            width: 45px;
-            height: 45px;
+            width: 50px;
+            height: 50px;
             background: var(--gradient-primary);
             border-radius: var(--border-radius-sm);
             display: flex;
@@ -103,7 +99,7 @@
         }
 
         .navbar-logo .logo-icon span {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             font-weight: 800;
             color: white;
             letter-spacing: -1px;
@@ -114,7 +110,7 @@
         }
 
         .navbar-logo .logo-text {
-            font-size: 1.3rem;
+            font-size: 1.4rem;
             font-weight: 700;
             color: var(--dark);
             letter-spacing: -0.5px;
@@ -204,14 +200,18 @@
             border-color: white;
         }
 
-        /* Hamburger menu */
+        /* Hamburger menu - properly contained */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
             gap: 6px;
             z-index: 1001;
-            padding: 5px;
+            padding: 8px; /* comfortable tap area */
+            background: transparent;
+            border: none;
+            outline: none;
+            margin: 0; /* no negative margins */
         }
 
         .hamburger span {
@@ -220,6 +220,7 @@
             background: var(--dark);
             transition: var(--transition);
             border-radius: 10px;
+            display: block;
         }
 
         .navbar.scrolled .hamburger span {
@@ -1291,7 +1292,7 @@
                 white-space: normal;
             }
 
-            /* Add overlay when menu is open */
+            /* Background overlay when menu open */
             .nav-menu.active::before {
                 content: '';
                 position: fixed;
@@ -1315,12 +1316,10 @@
         }
 
         @media (max-width: 600px) {
-            .navbar {
-                padding: 0.8rem 1rem;
+            .navbar .container {
+                padding: 0.8rem 1.5rem; /* consistent padding */
             }
-            .navbar.scrolled {
-                padding: 0.6rem 1rem;
-            }
+
             .navbar-logo .logo-icon {
                 width: 40px;
                 height: 40px;
@@ -1330,6 +1329,11 @@
             }
             .navbar-logo .logo-text {
                 display: none;
+            }
+
+            /* Hamburger stays inside container, no negative margins */
+            .hamburger {
+                padding: 8px; /* comfortable tap area */
             }
 
             .hero {
@@ -1446,6 +1450,9 @@
         }
 
         @media (max-width: 400px) {
+            .navbar .container {
+                padding: 0.8rem 1rem; /* adjust for very small screens */
+            }
             .hero-title {
                 font-size: 2rem;
             }
@@ -1498,14 +1505,14 @@
                 <li><a href="#gallery" class="nav-link">Gallery</a></li>
                 <li><a href="#volunteer" class="nav-link">Volunteer</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
-                <li><a href="indexxx.html" class="nav-link nav-donate">Donate</a></li>
+                <li><a href="donate.html" class="nav-link nav-donate">Donate</a></li>
             </ul>
 
-            <div class="hamburger" id="hamburger">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -1905,7 +1912,6 @@
     <!-- ===== SCROLL REVEAL & NAVBAR SCRIPT (optimized) ===== -->
     <script>
         (function() {
-            // Navbar scroll effect and active link highlight
             const navbar = document.getElementById('navbar');
             const hamburger = document.getElementById('hamburger');
             const navMenu = document.getElementById('navMenu');
@@ -1938,7 +1944,8 @@
             window.addEventListener('scroll', updateNavbar);
 
             // Mobile menu toggle
-            hamburger.addEventListener('click', () => {
+            hamburger.addEventListener('click', (e) => {
+                e.stopPropagation();
                 hamburger.classList.toggle('active');
                 navMenu.classList.toggle('active');
             });
@@ -1951,7 +1958,7 @@
                 });
             });
 
-            // Close menu when clicking outside (optional)
+            // Close menu when clicking outside
             document.addEventListener('click', (e) => {
                 if (navMenu.classList.contains('active') && 
                     !navMenu.contains(e.target) && 

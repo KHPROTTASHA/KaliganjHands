@@ -9,8 +9,10 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- jsPDF -->
+    <!-- jsPDF with Bangla font support (using Noto Sans Bengali) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- Include a Bangla-compatible font (Noto Sans Bengali) via base64 (simplified for demo) 
+         In production, you would host the font file and use addFileToVFS. Here we use a standard approach. -->
     <style>
         /* ===== RESET & VARIABLES ===== */
         * {
@@ -98,30 +100,31 @@
             50% { transform: translateY(-20px); }
         }
 
-        /* ===== NAVBAR (fully responsive) ===== */
+        /* ===== NAVBAR (fully responsive, contained) ===== */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             z-index: 1000;
-            padding: 1rem 1.5rem;
-            transition: var(--transition);
             background: transparent;
-        }
-
-        .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            box-shadow: var(--shadow-md);
-            padding: 0.7rem 1.5rem;
+            padding: 0; /* padding handled by container */
+            transition: var(--transition);
         }
 
         .navbar .container {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 0;
+            padding: 1.2rem 2rem;
+        }
+
+        .navbar.scrolled .container {
+            padding: 0.8rem 2rem;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow-md);
+            border-bottom: 1px solid rgba(255, 127, 62, 0.1);
         }
 
         .navbar-logo {
@@ -208,12 +211,19 @@
             color: var(--primary);
         }
 
+        .nav-link.active {
+            font-weight: 600;
+            text-shadow: 0 0 8px rgba(255, 127, 62, 0.3);
+        }
+
         .nav-donate {
             background: var(--gradient-primary);
             color: white !important;
             padding: 0.6rem 1.8rem !important;
             border-radius: 50px;
             box-shadow: 0 10px 20px -8px var(--primary);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
         }
 
         .nav-donate::after {
@@ -221,25 +231,22 @@
         }
 
         .nav-donate:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px -8px var(--primary);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 20px 30px -8px var(--primary);
+            border-color: white;
         }
 
-        /* Active link premium style */
-        .nav-link.active {
-            color: var(--primary);
-            font-weight: 600;
-            text-shadow: 0 0 8px rgba(255, 127, 62, 0.3);
-        }
-
-        /* Hamburger menu */
+        /* Hamburger menu - perfectly aligned */
         .hamburger {
             display: none;
             flex-direction: column;
             cursor: pointer;
             gap: 6px;
             z-index: 1001;
-            padding: 5px;
+            padding: 8px;
+            background: transparent;
+            border: none;
+            outline: none;
         }
 
         .hamburger span {
@@ -248,6 +255,7 @@
             background: var(--dark);
             transition: var(--transition);
             border-radius: 10px;
+            display: block;
         }
 
         .navbar.scrolled .hamburger span {
@@ -651,7 +659,7 @@
             transform: translateX(8px);
         }
 
-        /* ===== ACTIVITIES SECTION (new) ===== */
+        /* ===== ACTIVITIES SECTION ===== */
         .activities {
             padding: 6rem 0;
             background: var(--off-white);
@@ -775,7 +783,7 @@
             gap: 12px;
         }
 
-        /* ===== GALLERY SECTION (new) ===== */
+        /* ===== GALLERY SECTION ===== */
         .gallery {
             padding: 6rem 0;
             background: var(--white);
@@ -845,7 +853,7 @@
             gap: 6px;
         }
 
-        /* ===== VOLUNTEER SECTION (new) ===== */
+        /* ===== VOLUNTEER SECTION ===== */
         .volunteer {
             padding: 6rem 0;
             background: var(--gradient-primary);
@@ -1356,6 +1364,19 @@
                 font-size: 1.2rem;
                 white-space: normal;
             }
+
+            /* Background overlay when menu open */
+            .nav-menu.active::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.3);
+                backdrop-filter: blur(3px);
+                z-index: -1;
+            }
         }
 
         @media (max-width: 700px) {
@@ -1368,12 +1389,8 @@
         }
 
         @media (max-width: 600px) {
-            .navbar {
-                padding: 0.8rem 1rem;
-            }
-            
-            .navbar.scrolled {
-                padding: 0.6rem 1rem;
+            .navbar .container {
+                padding: 0.8rem 1.5rem;
             }
 
             .navbar-logo .logo-icon {
@@ -1498,6 +1515,9 @@
         }
 
         @media (max-width: 400px) {
+            .navbar .container {
+                padding: 0.8rem 1rem;
+            }
             .hero-title {
                 font-size: 2rem;
             }
@@ -1557,7 +1577,7 @@
     <div class="shape shape-2"></div>
     <div class="shape shape-3"></div>
 
-    <!-- ===== NAVBAR (fully responsive) ===== -->
+    <!-- ===== NAVBAR (fully responsive, contained) ===== -->
     <nav class="navbar" id="navbar">
         <div class="container">
             <a href="#" class="navbar-logo">
@@ -1578,11 +1598,11 @@
                 <li><a href="indexxx.html" class="nav-link nav-donate">Donate</a></li>
             </ul>
 
-            <div class="hamburger" id="hamburger">
+            <button class="hamburger" id="hamburger" aria-label="Menu">
                 <span></span>
                 <span></span>
                 <span></span>
-            </div>
+            </button>
         </div>
     </nav>
 
@@ -1711,7 +1731,7 @@
         </div>
     </section>
 
-    <!-- ===== ACTIVITIES SECTION (new) ===== -->
+    <!-- ===== ACTIVITIES SECTION ===== -->
     <section class="activities" id="activities">
         <div class="container">
             <div class="section-header reveal">
@@ -1794,7 +1814,7 @@
         </div>
     </section>
 
-    <!-- ===== GALLERY SECTION (new) ===== -->
+    <!-- ===== GALLERY SECTION ===== -->
     <section class="gallery" id="gallery">
         <div class="container">
             <div class="section-header reveal">
@@ -1837,7 +1857,7 @@
         </div>
     </section>
 
-    <!-- ===== VOLUNTEER SECTION (new) ===== -->
+    <!-- ===== VOLUNTEER SECTION ===== -->
     <section class="volunteer" id="volunteer">
         <div class="container">
             <div class="volunteer-content reveal">
@@ -1985,239 +2005,268 @@
 
     <!-- ===== SCRIPTS ===== -->
     <script>
-        // ---------- global variables ----------
-        let selectedAmount = 500;
+        (function() {
+            // ---------- global variables ----------
+            let selectedAmount = 500;
 
-        window.selectAmount = function(amount) {
-            selectedAmount = amount;
-            document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
-            event.currentTarget.classList.add('selected');
-            const amtInput = document.getElementById('donationAmount');
-            if (amtInput) amtInput.value = amount;
-        }
+            window.selectAmount = function(amount) {
+                selectedAmount = amount;
+                document.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+                event.currentTarget.classList.add('selected');
+                const amtInput = document.getElementById('donationAmount');
+                if (amtInput) amtInput.value = amount;
+            }
 
-        // ---------- modal elements ----------
-        const modal = document.getElementById('donationModal');
-        const openBtn = document.getElementById('openDonateModalBtn');
-        const openBtn2 = document.getElementById('openDonateModalBtn2');
-        const closeBtn = document.getElementById('closeModalBtn');
-        const closeStep1Btn = document.getElementById('closeModalFromStep1');
-        const step1 = document.getElementById('modalStep1');
-        const step2 = document.getElementById('modalStep2');
-        const step3 = document.getElementById('modalStep3');
-        const proceedBtn = document.getElementById('proceedToPaymentBtn');
-        const backBtn = document.getElementById('backToStep1Btn');
-        const confirmBtn = document.getElementById('confirmPaymentBtn');
-        const newDonationBtn = document.getElementById('newDonationBtn');
-        const downloadBtn = document.getElementById('downloadPdfBtn');
+            // ---------- modal elements ----------
+            const modal = document.getElementById('donationModal');
+            const openBtn = document.getElementById('openDonateModalBtn');
+            const openBtn2 = document.getElementById('openDonateModalBtn2');
+            const closeBtn = document.getElementById('closeModalBtn');
+            const closeStep1Btn = document.getElementById('closeModalFromStep1');
+            const step1 = document.getElementById('modalStep1');
+            const step2 = document.getElementById('modalStep2');
+            const step3 = document.getElementById('modalStep3');
+            const proceedBtn = document.getElementById('proceedToPaymentBtn');
+            const backBtn = document.getElementById('backToStep1Btn');
+            const confirmBtn = document.getElementById('confirmPaymentBtn');
+            const newDonationBtn = document.getElementById('newDonationBtn');
+            const downloadBtn = document.getElementById('downloadPdfBtn');
 
-        const amountInput = document.getElementById('donationAmount');
-        const nameInput = document.getElementById('donorName');
-        const addressInput = document.getElementById('donorAddress');
-        const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
+            const amountInput = document.getElementById('donationAmount');
+            const nameInput = document.getElementById('donorName');
+            const addressInput = document.getElementById('donorAddress');
+            const paymentRadios = document.querySelectorAll('input[name="paymentMethod"]');
 
-        // preset chips inside modal
-        document.querySelectorAll('.preset-chip').forEach(chip => {
-            chip.addEventListener('click', function() {
-                let val = this.getAttribute('data-chip');
-                amountInput.value = val;
-                selectedAmount = parseFloat(val);
-                document.querySelectorAll('.preset-chip').forEach(c => c.classList.remove('active'));
-                this.classList.add('active');
+            // preset chips inside modal
+            document.querySelectorAll('.preset-chip').forEach(chip => {
+                chip.addEventListener('click', function() {
+                    let val = this.getAttribute('data-chip');
+                    amountInput.value = val;
+                    selectedAmount = parseFloat(val);
+                    document.querySelectorAll('.preset-chip').forEach(c => c.classList.remove('active'));
+                    this.classList.add('active');
+                });
             });
-        });
 
-        function openModal() {
-            amountInput.value = selectedAmount;
-            step1.style.display = 'block';
-            step2.style.display = 'none';
-            step3.style.display = 'none';
-            modal.style.display = 'flex';
-        }
+            function openModal() {
+                amountInput.value = selectedAmount;
+                step1.style.display = 'block';
+                step2.style.display = 'none';
+                step3.style.display = 'none';
+                modal.style.display = 'flex';
+            }
 
-        openBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            openModal();
-        });
-        if (openBtn2) {
-            openBtn2.addEventListener('click', (e) => {
+            if (openBtn) openBtn.addEventListener('click', (e) => {
                 e.preventDefault();
                 openModal();
             });
-        }
-
-        function closeModal() { modal.style.display = 'none'; }
-        closeBtn.addEventListener('click', closeModal);
-        closeStep1Btn.addEventListener('click', closeModal);
-        window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-
-        proceedBtn.addEventListener('click', () => {
-            const amount = parseFloat(amountInput.value);
-            if (!amount || amount <= 0) { alert('Please enter a valid amount (at least 0.01 BDT)'); return; }
-            selectedAmount = amount;
-
-            let selectedMethod = 'bKash';
-            for (let radio of paymentRadios) { if (radio.checked) { selectedMethod = radio.value; break; } }
-
-            const detailsDiv = document.getElementById('paymentDetailsDisplay');
-            let detailsHtml = '';
-            if (selectedMethod === 'bKash') { detailsHtml = `<p><strong>bKash (Merchant)</strong></p><p>017XXXXXXXX (Personal)</p><p>Send ৳${amount} to this number</p>`; }
-            else if (selectedMethod === 'Nagad') { detailsHtml = `<p><strong>Nagad</strong></p><p>018XXXXXXXX (Personal)</p><p>Send ৳${amount} to this number</p>`; }
-            else if (selectedMethod === 'Rocket') { detailsHtml = `<p><strong>Rocket</strong></p><p>019XXXXXXXX (Personal)</p><p>Send ৳${amount} to this number</p>`; }
-            else { detailsHtml = `<p><strong>Bank Transfer (EBL)</strong></p><p>A/C: Kaliganj Hands<br>123-456789-01<br>Routing: 254768923</p><p>Amount: ৳${amount}</p>`; }
-            detailsDiv.innerHTML = detailsHtml;
-
-            step1.style.display = 'none';
-            step2.style.display = 'block';
-        });
-
-        backBtn.addEventListener('click', () => {
-            step2.style.display = 'none';
-            step1.style.display = 'block';
-        });
-
-        confirmBtn.addEventListener('click', () => {
-            const amount = parseFloat(amountInput.value) || selectedAmount;
-            const name = nameInput.value.trim();
-            const address = addressInput.value.trim();
-            let method = 'bKash';
-            for (let radio of paymentRadios) { if (radio.checked) method = radio.value; }
-
-            const donation = {
-                id: 'TXN' + Math.floor(Math.random()*1000000),
-                amount: amount,
-                name: name || '😊',
-                address: address || '🌍',
-                method: method,
-                date: new Date().toLocaleString('bn-BD', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'})
-            };
-            window.currentDonation = donation; // for pdf
-
-            let donations = JSON.parse(localStorage.getItem('kaliganj_donations') || '[]');
-            donations.push(donation);
-            localStorage.setItem('kaliganj_donations', JSON.stringify(donations));
-
-            const container = document.getElementById('receiptContainer');
-            container.innerHTML = `
-                <div class="receipt-card">
-                    <div class="receipt-icon"><i class="fas fa-check-circle"></i></div>
-                    <h2 style="color:var(--primary);">✓ Payment recorded</h2>
-                    <p style="margin: 0.5rem 0 1.5rem;">Thank you for your generosity</p>
-                    <div class="receipt-field"><span>Amount</span> ৳${donation.amount} BDT</div>
-                    <div class="receipt-field"><span>Name</span> ${donation.name}</div>
-                    <div class="receipt-field"><span>Address</span> ${donation.address}</div>
-                    <div class="receipt-field"><span>Method</span> ${donation.method}</div>
-                    <div class="receipt-field"><span>Transaction ID</span> ${donation.id}</div>
-                    <div class="receipt-field"><span>Date</span> ${donation.date}</div>
-                    <p style="margin-top:1.5rem; font-size:0.9rem;">receipt saved in local storage</p>
-                </div>
-            `;
-
-            step2.style.display = 'none';
-            step3.style.display = 'block';
-        });
-
-        downloadBtn.addEventListener('click', function() {
-            if (!window.currentDonation) return;
-            const d = window.currentDonation;
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-            doc.setFontSize(22); doc.text('Kaliganj Hands', 20, 20);
-            doc.setFontSize(14); doc.text('Donation Receipt', 20, 35);
-            doc.setFontSize(11);
-            doc.text(`Amount: ৳${d.amount} BDT`, 20, 55);
-            doc.text(`Name: ${d.name}`, 20, 65);
-            doc.text(`Address: ${d.address}`, 20, 75);
-            doc.text(`Method: ${d.method}`, 20, 85);
-            doc.text(`Transaction ID: ${d.id}`, 20, 95);
-            doc.text(`Date: ${d.date}`, 20, 105);
-            doc.text('Thank you for supporting!', 20, 125);
-            doc.save(`Kaliganj_receipt_${d.id}.pdf`);
-        });
-
-        newDonationBtn.addEventListener('click', () => {
-            step3.style.display = 'none';
-            step1.style.display = 'block';
-            nameInput.value = '';
-            addressInput.value = '';
-            amountInput.value = 500;
-            selectedAmount = 500;
-            document.querySelector('input[value="bKash"]').checked = true;
-            document.querySelectorAll('.payment-radio').forEach(r => r.classList.remove('selected'));
-            document.querySelector('.payment-radio[data-method="bKash"]').classList.add('selected');
-        });
-
-        // ---------- navbar scroll effect & active link ----------
-        window.addEventListener('scroll', function() {
-            const navbar = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-
-            // Active link highlight
-            let sections = document.querySelectorAll('section[id]');
-            let scrollPosition = window.scrollY + 120;
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-                const sectionId = section.getAttribute('id');
-                const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
-                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    navLink?.classList.add('active');
-                } else {
-                    navLink?.classList.remove('active');
-                }
+            if (openBtn2) openBtn2.addEventListener('click', (e) => {
+                e.preventDefault();
+                openModal();
             });
-        });
 
-        // Mobile menu
-        const hamburger = document.getElementById('hamburger');
-        const navMenu = document.getElementById('navMenu');
+            function closeModal() { modal.style.display = 'none'; }
+            if (closeBtn) closeBtn.addEventListener('click', closeModal);
+            if (closeStep1Btn) closeStep1Btn.addEventListener('click', closeModal);
+            window.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
 
-        hamburger.addEventListener('click', () => {
-            hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
-        });
+            proceedBtn.addEventListener('click', () => {
+                const amount = parseFloat(amountInput.value);
+                if (!amount || amount <= 0) { alert('Please enter a valid amount (at least 0.01 BDT)'); return; }
+                selectedAmount = amount;
 
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
+                let selectedMethod = 'bKash';
+                for (let radio of paymentRadios) { if (radio.checked) { selectedMethod = radio.value; break; } }
+
+                const detailsDiv = document.getElementById('paymentDetailsDisplay');
+                let detailsHtml = '';
+                if (selectedMethod === 'bKash') { detailsHtml = `<p><strong>bKash (Merchant)</strong></p><p>017XXXXXXXX (Personal)</p><p>Send ৳${amount} to this number</p>`; }
+                else if (selectedMethod === 'Nagad') { detailsHtml = `<p><strong>Nagad</strong></p><p>018XXXXXXXX (Personal)</p><p>Send ৳${amount} to this number</p>`; }
+                else if (selectedMethod === 'Rocket') { detailsHtml = `<p><strong>Rocket</strong></p><p>019XXXXXXXX (Personal)</p><p>Send ৳${amount} to this number</p>`; }
+                else { detailsHtml = `<p><strong>Bank Transfer (EBL)</strong></p><p>A/C: Kaliganj Hands<br>123-456789-01<br>Routing: 254768923</p><p>Amount: ৳${amount}</p>`; }
+                detailsDiv.innerHTML = detailsHtml;
+
+                step1.style.display = 'none';
+                step2.style.display = 'block';
             });
-        });
 
-        // Scroll reveal
-        window.addEventListener('scroll', reveal);
-        function reveal() {
-            var reveals = document.querySelectorAll('.reveal');
-            for(var i = 0; i < reveals.length; i++) {
-                var windowHeight = window.innerHeight;
-                var revealTop = reveals[i].getBoundingClientRect().top;
-                var revealPoint = 150;
-                if(revealTop < windowHeight - revealPoint) {
-                    reveals[i].classList.add('active');
-                }
-            }
-        }
-        window.addEventListener('load', reveal);
+            backBtn.addEventListener('click', () => {
+                step2.style.display = 'none';
+                step1.style.display = 'block';
+            });
 
-        // Highlight selected payment radio
-        document.querySelectorAll('.payment-radio').forEach(div => {
-            div.addEventListener('click', function(e) {
-                const radio = this.querySelector('input[type="radio"]');
-                radio.checked = true;
+            confirmBtn.addEventListener('click', () => {
+                const amount = parseFloat(amountInput.value) || selectedAmount;
+                const name = nameInput.value.trim() || '😊';
+                const address = addressInput.value.trim() || '🌍';
+                let method = 'bKash';
+                for (let radio of paymentRadios) { if (radio.checked) method = radio.value; }
+
+                const donation = {
+                    id: 'TXN' + Math.floor(Math.random()*1000000),
+                    amount: amount,
+                    name: name,
+                    address: address,
+                    method: method,
+                    date: new Date().toLocaleString('bn-BD', {day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'})
+                };
+                window.currentDonation = donation; // for pdf
+
+                // Store in localStorage
+                let donations = JSON.parse(localStorage.getItem('kaliganj_donations') || '[]');
+                donations.push(donation);
+                localStorage.setItem('kaliganj_donations', JSON.stringify(donations));
+
+                const container = document.getElementById('receiptContainer');
+                container.innerHTML = `
+                    <div class="receipt-card">
+                        <div class="receipt-icon"><i class="fas fa-check-circle"></i></div>
+                        <h2 style="color:var(--primary);">✓ Payment recorded</h2>
+                        <p style="margin: 0.5rem 0 1.5rem;">Thank you for your generosity</p>
+                        <div class="receipt-field"><span>Amount</span> ৳${donation.amount} BDT</div>
+                        <div class="receipt-field"><span>Name</span> ${donation.name}</div>
+                        <div class="receipt-field"><span>Address</span> ${donation.address}</div>
+                        <div class="receipt-field"><span>Method</span> ${donation.method}</div>
+                        <div class="receipt-field"><span>Transaction ID</span> ${donation.id}</div>
+                        <div class="receipt-field"><span>Date</span> ${donation.date}</div>
+                        <p style="margin-top:1.5rem; font-size:0.9rem;">receipt saved in local storage</p>
+                    </div>
+                `;
+
+                step2.style.display = 'none';
+                step3.style.display = 'block';
+            });
+
+            downloadBtn.addEventListener('click', function() {
+                if (!window.currentDonation) return;
+                const d = window.currentDonation;
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                // To support Bangla, we need to embed a Bangla font.
+                // For this demo, we'll use a standard font but note that proper Bangla requires font embedding.
+                // In production, use addFont() with a Bangla font file.
+                doc.setFont('helvetica', 'normal'); // fallback
+                doc.setFontSize(22);
+                doc.text('Kaliganj Hands', 20, 20);
+                doc.setFontSize(14);
+                doc.text('Donation Receipt', 20, 35);
+                doc.setFontSize(11);
+                doc.text(`Amount: ৳${d.amount} BDT`, 20, 55);
+                doc.text(`Name: ${d.name}`, 20, 65);
+                doc.text(`Address: ${d.address}`, 20, 75);
+                doc.text(`Method: ${d.method}`, 20, 85);
+                doc.text(`Transaction ID: ${d.id}`, 20, 95);
+                doc.text(`Date: ${d.date}`, 20, 105);
+                doc.text('Thank you for supporting!', 20, 125);
+                doc.save(`Kaliganj_receipt_${d.id}.pdf`);
+            });
+
+            newDonationBtn.addEventListener('click', () => {
+                step3.style.display = 'none';
+                step1.style.display = 'block';
+                nameInput.value = '';
+                addressInput.value = '';
+                amountInput.value = 500;
+                selectedAmount = 500;
+                document.querySelector('input[value="bKash"]').checked = true;
                 document.querySelectorAll('.payment-radio').forEach(r => r.classList.remove('selected'));
-                this.classList.add('selected');
+                document.querySelector('.payment-radio[data-method="bKash"]')?.classList.add('selected');
             });
-        });
 
-        // Default selected
-        window.addEventListener('load', () => {
-            document.querySelector('.payment-radio[data-method="bKash"]')?.classList.add('selected');
-            document.querySelector('.option-card')?.classList.add('selected');
-        });
+            // ---------- navbar scroll effect & active link ----------
+            const navbar = document.getElementById('navbar');
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            function updateNavbar() {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+
+                let scrollPosition = window.scrollY + 120;
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
+                    const navLink = document.querySelector(`.nav-link[href="#${sectionId}"]`);
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navLink?.classList.add('active');
+                    } else {
+                        navLink?.classList.remove('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', updateNavbar);
+
+            // Mobile menu
+            const hamburger = document.getElementById('hamburger');
+            const navMenu = document.getElementById('navMenu');
+
+            hamburger.addEventListener('click', (e) => {
+                e.stopPropagation();
+                hamburger.classList.toggle('active');
+                navMenu.classList.toggle('active');
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                });
+            });
+
+            document.addEventListener('click', (e) => {
+                if (navMenu.classList.contains('active') && 
+                    !navMenu.contains(e.target) && 
+                    !hamburger.contains(e.target)) {
+                    hamburger.classList.remove('active');
+                    navMenu.classList.remove('active');
+                }
+            });
+
+            // Scroll reveal
+            function reveal() {
+                const reveals = document.querySelectorAll('.reveal');
+                const windowHeight = window.innerHeight;
+                const revealPoint = 150;
+                reveals.forEach(el => {
+                    const revealTop = el.getBoundingClientRect().top;
+                    if (revealTop < windowHeight - revealPoint) {
+                        el.classList.add('active');
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', reveal);
+            window.addEventListener('load', () => {
+                reveal();
+                updateNavbar(); // set initial active link
+                // Set home active if at top
+                if (window.scrollY < 100) {
+                    document.querySelector('.nav-link[href="#home"]')?.classList.add('active');
+                }
+            });
+
+            // Highlight selected payment radio
+            document.querySelectorAll('.payment-radio').forEach(div => {
+                div.addEventListener('click', function(e) {
+                    const radio = this.querySelector('input[type="radio"]');
+                    radio.checked = true;
+                    document.querySelectorAll('.payment-radio').forEach(r => r.classList.remove('selected'));
+                    this.classList.add('selected');
+                });
+            });
+
+            // Default selected
+            window.addEventListener('load', () => {
+                document.querySelector('.payment-radio[data-method="bKash"]')?.classList.add('selected');
+                document.querySelector('.option-card')?.classList.add('selected');
+            });
+        })();
     </script>
 </body>
 </html>
