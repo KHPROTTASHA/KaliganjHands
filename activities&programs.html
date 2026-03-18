@@ -2,512 +2,608 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kaliganj Hands · Activities & Programs</title>
-    <!-- Fonts & Icons (consistent) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Kaliganj Hands · donate & support</title>
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Space+Grotesk:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- html2pdf (professional PDF generation) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #ffffff;
-            color: #1e2a2f;
-            line-height: 1.6;
-        }
-
-        /* Activities Section */
-        .activities-section {
-            padding: 6rem 2rem;
-            background: linear-gradient(135deg, #fef9f2 0%, #ffffff 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 5;
-        }
-
-        /* Section Header */
-        .section-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-tag {
-            display: inline-block;
-            font-size: 1.2rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            color: #FF7F3E;
-            text-transform: uppercase;
-            background: rgba(255, 127, 62, 0.1);
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 127, 62, 0.2);
-        }
-
-        .section-title {
-            font-size: 3.2rem;
-            font-weight: 700;
+            background: #fef9f2;
             color: #1E2A2F;
-            max-width: 800px;
-            margin: 0 auto 1rem;
-            line-height: 1.2;
+            line-height: 1.5;
+            overflow-x: hidden;
         }
-
-        .section-title span {
-            color: #FF7F3E;
-            position: relative;
-            display: inline-block;
+        :root {
+            --primary: #FF7F3E;
+            --primary-dark: #e5672a;
+            --primary-light: #FF9F5C;
+            --dark: #1E2A2F;
+            --gray: #4a5c62;
+            --off-white: #fef9f2;
+            --white: #ffffff;
+            --gradient-primary: linear-gradient(145deg, #FF7F3E, #FF9F5C);
+            --shadow-lg: 0 30px 60px -20px rgba(255, 127, 62, 0.4);
+            --border-radius: 30px 12px 30px 12px;
         }
-
-        .section-title span::after {
-            content: '';
-            position: absolute;
-            bottom: 5px;
-            left: 0;
-            width: 100%;
-            height: 10px;
-            background: rgba(255, 215, 0, 0.25);
-            z-index: -1;
-            border-radius: 20px;
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        
+        /* navbar */
+        .navbar {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.03);
+            position: sticky; top: 0; z-index: 100;
         }
-
-        .section-subtitle {
-            font-size: 1.2rem;
-            color: #4a5c62;
-            max-width: 600px;
-            margin: 0 auto;
-            font-family: 'Playfair Display', serif;
-            font-style: italic;
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; padding: 1rem 2rem;
+            display: flex; align-items: center; justify-content: space-between;
         }
-
-        /* Activities Grid */
-        .activities-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2.5rem;
-            margin: 3rem 0 4rem;
+        .logo {
+            display: flex; align-items: center; gap: 0.8rem; text-decoration: none;
         }
-
-        /* Activity Card */
-        .activity-card {
-            background: white;
-            border-radius: 30px 12px 30px 12px;
-            overflow: hidden;
-            box-shadow: 0 20px 35px -10px rgba(255, 127, 62, 0.15);
-            transition: all 0.4s ease;
-            border: 1px solid rgba(255, 127, 62, 0.1);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            backdrop-filter: blur(5px);
-            background: rgba(255, 255, 255, 0.98);
+        .logo-icon {
+            width: 48px; height: 48px; background: var(--gradient-primary);
+            border-radius: 20px 8px 20px 8px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 20px -8px var(--primary);
         }
-
-        .activity-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 35px 50px -15px rgba(255, 127, 62, 0.3);
-            border-color: rgba(255, 127, 62, 0.3);
+        .logo-icon span { font-size: 1.8rem; font-weight: 800; color: white; letter-spacing: -1px; }
+        .logo-text { font-size: 1.3rem; font-weight: 700; color: var(--dark); }
+        .nav-links { display: flex; gap: 2rem; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--dark); font-weight: 500; transition: 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+        .btn-home {
+            background: transparent; border: 2px solid var(--primary); padding: 0.5rem 1.5rem;
+            border-radius: 40px; font-weight: 600; color: var(--primary);
         }
+        .btn-home:hover { background: var(--primary); color: white; }
 
-        /* Card Image */
-        .card-image {
-            width: 100%;
-            height: 250px;
-            overflow: hidden;
-            position: relative;
+        /* donation header */
+        .donation-header {
+            text-align: center; margin: 3rem 0 2rem;
         }
-
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.6s ease;
+        .donation-header h1 {
+            font-size: 3.5rem; font-weight: 800; letter-spacing: -1px; color: var(--dark);
         }
-
-        .activity-card:hover .card-image img {
-            transform: scale(1.1);
+        .donation-header h1 span { color: var(--primary); position: relative; display: inline-block; }
+        .donation-header h1 span::after {
+            content: ''; position: absolute; bottom: 8px; left: 0; width: 100%; height: 12px;
+            background: rgba(255, 217, 0, 0.25); z-index: -1; border-radius: 20px;
         }
+        .donation-header p { font-size: 1.2rem; color: var(--gray); max-width: 600px; margin: 1rem auto; }
 
-        /* Image Overlay Badge (date/location) */
-        .image-badge {
-            position: absolute;
-            bottom: 15px;
-            left: 15px;
-            background: rgba(255, 127, 62, 0.9);
-            color: white;
-            padding: 0.4rem 1rem;
-            border-radius: 50px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            z-index: 2;
+        /* PREMIUM CARD */
+        .premium-card {
+            background: rgba(255,255,255,0.85);
+            backdrop-filter: blur(20px);
+            border-radius: var(--border-radius); 
+            box-shadow: 0 40px 70px -15px rgba(255,127,62,0.3), 0 0 0 1px rgba(255,127,62,0.15);
+            max-width: 1100px; margin: 2rem auto; overflow: hidden;
+            display: grid; grid-template-columns: 1.1fr 0.9fr;
+            transition: all 0.3s;
         }
-
-        .image-badge i {
-            font-size: 0.8rem;
+        .premium-left {
+            background: linear-gradient(145deg, #fff7f0, #ffefe4); 
+            padding: 3rem 2.5rem;
+            border-right: 1px solid rgba(255,127,62,0.2);
         }
+        .premium-left h2 { font-size: 2.2rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; gap: 10px; }
+        .premium-left h2 i { color: var(--primary); }
+        .impact-list { margin: 2rem 0; list-style: none; }
+        .impact-list li { display: flex; gap: 15px; margin-bottom: 1.5rem; align-items: center; }
+        .impact-list li i { font-size: 1.8rem; color: var(--primary); background: rgba(255,127,62,0.15); padding: 12px; border-radius: 50%; }
+        .testimonial { font-style: italic; font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--gray); border-left: 4px solid var(--primary); padding-left: 1.5rem; margin: 2rem 0; }
 
-        /* Card Content */
-        .card-content {
-            padding: 2rem;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
+        .premium-right { padding: 3rem 2.5rem; background: transparent; }
+        .donor-type { display: flex; gap: 1rem; margin: 1.5rem 0 2rem; }
+        .type-btn {
+            flex:1; padding: 0.9rem; background: rgba(0,0,0,0.03); border: 1px solid #ddd; border-radius: 60px;
+            font-weight: 600; cursor: pointer; transition: 0.2s; font-size: 1rem;
         }
+        .type-btn.active { background: var(--gradient-primary); color: white; border-color: transparent; box-shadow: 0 12px 25px -10px var(--primary); }
 
-        .activity-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #1E2A2F;
-            margin-bottom: 1rem;
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .input-group { margin-bottom: 1.8rem; position: relative; }
+        .input-group label { font-weight: 600; font-size: 0.9rem; color: var(--dark); display: block; margin-bottom: 6px; }
+        .input-group i { position: absolute; left: 18px; top: 43px; color: var(--primary); font-size: 1.2rem; }
+        .input-group input, .input-group select, .input-group textarea {
+            width: 100%; padding: 14px 16px 14px 48px; border: 2px solid rgba(0,0,0,0.05); border-radius: 60px;
+            font-size: 1rem; transition: 0.2s; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
+        .input-group textarea { padding: 14px 16px 14px 48px; border-radius: 30px; resize: vertical; min-height: 80px; font-family: 'Inter', sans-serif; }
+        .input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: var(--primary); outline: none; box-shadow: 0 0 0 4px rgba(255,127,62,0.15); }
 
-        .activity-title i {
-            color: #FF7F3E;
-            font-size: 1.8rem;
+        .amount-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin: 1rem 0 1.5rem; }
+        .amount-option {
+            background: white; border: 2px solid #eee; border-radius: 60px; padding: 12px 0;
+            font-weight: 700; cursor: pointer; transition: 0.2s; text-align: center; box-shadow: 0 4px 8px rgba(0,0,0,0.02);
         }
+        .amount-option.selected { background: var(--primary); border-color: var(--primary); color: white; transform: scale(1.02); }
 
-        .activity-description {
-            font-size: 1.1rem;
-            color: #4a5c62;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            flex: 1;
-        }
-
-        /* Activity Stats (like people helped) */
-        .activity-stats {
-            display: flex;
-            gap: 1.5rem;
-            margin: 1rem 0 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 127, 62, 0.15);
-        }
-
-        .stat {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.95rem;
-            color: #7f8c8d;
-        }
-
-        .stat i {
-            color: #4CAF50;
-            font-size: 1rem;
-        }
-
-        .stat strong {
-            color: #FF7F3E;
-            font-weight: 700;
-        }
-
-        /* Read More Link */
-        .read-more {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: #FF7F3E;
-            font-weight: 600;
-            text-decoration: none;
-            margin-top: auto;
-            transition: gap 0.3s ease;
-        }
-
-        .read-more:hover {
-            gap: 12px;
-            color: #e5672a;
-        }
-
-        .read-more i {
-            font-size: 0.9rem;
-        }
-
-        /* View All Button */
-        .view-all-container {
-            text-align: center;
-            margin-top: 3rem;
-        }
-
-        .view-all-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(145deg, #FF7F3E, #FF9F5C);
-            color: white;
-            padding: 1rem 2.8rem;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 20px 30px -10px #FF7F3E;
+        .pay-btn {
+            width: 100%; background: var(--gradient-primary); border: none; padding: 1.2rem;
+            border-radius: 60px; color: white; font-size: 1.4rem; font-weight: 700;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            cursor: pointer; transition: 0.3s; margin: 2rem 0 1.2rem; box-shadow: 0 20px 30px -8px var(--primary);
             border: 2px solid transparent;
         }
+        .pay-btn:hover { transform: translateY(-3px); box-shadow: 0 30px 40px -8px var(--primary); }
+        .pay-btn:active { transform: scale(0.99); }
 
-        .view-all-btn:hover {
-            background: transparent;
-            color: #FF7F3E;
-            border-color: #FF7F3E;
-            transform: translateY(-5px);
-            box-shadow: 0 25px 35px -12px #FF7F3E;
+        .secure-badge { display: flex; gap: 20px; justify-content: center; color: var(--gray); font-size: 0.9rem; }
+        .secure-badge i { color: var(--primary); }
+
+        /* ===== COLORFUL, VIBRANT PDF RECEIPT STYLES ===== */
+        .receipt-container {
+            max-width: 800px; margin: 3rem auto; background: rgba(255,255,255,0.7);
+            backdrop-filter: blur(12px); border-radius: 48px 16px 48px 16px;
+            padding: 2rem; border: 1px solid rgba(255,127,62,0.3); box-shadow: var(--shadow-lg);
+            display: none;
+        }
+        #receiptContent {
+            background: linear-gradient(145deg, #ffffff, #fff9f5); 
+            padding: 2.5rem; border-radius: 36px 12px 36px 12px;
+            font-family: 'Space Grotesk', 'Inter', sans-serif; 
+            border: 3px solid var(--primary-light);
+            box-shadow: 0 20px 40px -10px rgba(255,127,62,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        /* decorative elements */
+        #receiptContent::before {
+            content: '❤️'; position: absolute; top: -20px; right: -20px; font-size: 150px; opacity: 0.05; transform: rotate(15deg); pointer-events: none;
+        }
+        #receiptContent::after {
+            content: 'KH'; position: absolute; bottom: -30px; left: -30px; font-size: 140px; font-weight: 800; color: var(--primary); opacity: 0.05; pointer-events: none;
+        }
+        .receipt-header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            padding: 1.2rem 2rem; border-radius: 60px 12px 60px 12px; margin-bottom: 2.5rem;
+            color: white; position: relative; z-index: 2;
+            box-shadow: 0 15px 30px -8px var(--primary);
+        }
+        .receipt-header h3 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.5px; text-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
+        .receipt-header span { 
+            background: rgba(255,255,255,0.25); padding: 0.6rem 1.8rem; border-radius: 60px; 
+            font-weight: 700; font-size: 1.2rem; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.4);
+        }
+        .receipt-id-row {
+            display: flex; justify-content: space-between; background: #f0e4d8; 
+            padding: 0.8rem 1.8rem; border-radius: 40px; margin-bottom: 2rem; font-weight: 600;
+            color: var(--dark); border: 1px dashed var(--primary);
+        }
+        .receipt-grid { 
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.8rem; 
+            background: rgba(255,255,255,0.7); padding: 2rem; border-radius: 30px; margin-bottom: 2rem;
+            border: 2px solid rgba(255,127,62,0.2);
+        }
+        .receipt-item { 
+            background: white; padding: 1.2rem 1.5rem; border-radius: 24px; 
+            box-shadow: 0 8px 15px -6px rgba(0,0,0,0.05); border-left: 6px solid var(--primary);
+        }
+        .receipt-item .label { font-size: 0.9rem; text-transform: uppercase; color: var(--gray); letter-spacing: 0.5px; margin-bottom: 0.4rem; }
+        .receipt-item .value { font-size: 1.5rem; font-weight: 800; color: var(--dark); word-break: break-word; }
+        .value i { color: var(--primary); margin-right: 6px; }
+
+        .anonymous-badge {
+            background: linear-gradient(145deg, #4a5c62, #2c3e50); color: white; padding: 0.3rem 1.2rem; border-radius: 60px;
+            display: inline-block; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.5px; margin-left: 10px;
+        }
+        .receipt-footer {
+            text-align: center; margin-top: 2rem; padding: 1.8rem; 
+            background: linear-gradient(145deg, #fafafa, #ffffff); border-radius: 50px 12px 50px 12px;
+            border: 2px dashed var(--primary); position: relative; z-index: 2;
+        }
+        .qr-sim { font-size: 2rem; letter-spacing: 4px; color: var(--primary); }
+        .download-btn {
+            background: var(--gradient-primary); color: white; border: none; padding: 1.2rem 3rem; border-radius: 60px;
+            font-weight: 700; font-size: 1.3rem; margin-top: 2rem; cursor: pointer; display: inline-flex; align-items: center; gap: 15px;
+            transition: 0.3s; box-shadow: 0 15px 30px -8px var(--primary); border: 2px solid white;
+        }
+        .download-btn:hover { background: var(--dark); transform: translateY(-4px); box-shadow: 0 25px 35px -10px var(--dark); }
+
+        .home-return { text-align: center; margin: 4rem 0 3rem; }
+        .return-link { color: var(--primary); font-weight: 600; text-decoration: none; font-size: 1.2rem; border: 2px solid rgba(255,127,62,0.3); padding: 0.7rem 2rem; border-radius: 60px; transition: 0.2s; display: inline-block; }
+        .return-link:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+        .footer { background: var(--dark); color: white; padding: 2rem; text-align: center; margin-top: 3rem; }
+
+        .loader {
+            display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%; border-top-color: white; animation: spin 1s ease-in-out infinite;
+            margin-left: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .toast {
+            position: fixed; bottom: 30px; right: 30px; background: var(--dark); color: white;
+            padding: 1rem 2rem; border-radius: 60px; box-shadow: var(--shadow-lg); z-index: 200;
+            display: none; align-items: center; gap: 12px;
         }
 
-        .view-all-btn i {
-            transition: transform 0.3s ease;
+        @media (max-width:800px){
+            .premium-card { grid-template-columns:1fr; }
+            .premium-left { border-right:0; border-bottom:1px solid rgba(255,127,62,0.2); }
+            .container { padding:0 1.5rem; }
+            .receipt-grid { grid-template-columns:1fr; }
         }
-
-        .view-all-btn:hover i {
-            transform: translateX(5px);
-        }
-
-        /* Background Shapes */
-        .activity-shape-1 {
-            position: absolute;
-            top: 150px;
-            right: -30px;
-            width: 280px;
-            height: 280px;
-            background: #FFD93D;
-            opacity: 0.07;
-            border-radius: 50%;
-            filter: blur(70px);
-            z-index: 0;
-        }
-
-        .activity-shape-2 {
-            position: absolute;
-            bottom: 80px;
-            left: -50px;
-            width: 300px;
-            height: 300px;
-            background: #4CAF50;
-            opacity: 0.07;
-            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
-            filter: blur(70px);
-            z-index: 0;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .section-title {
-                font-size: 2.5rem;
-            }
-            .activities-grid {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            .card-image {
-                height: 220px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .activities-section {
-                padding: 4rem 1.5rem;
-            }
-            .section-title {
-                font-size: 2rem;
-            }
-            .activity-title {
-                font-size: 1.5rem;
-            }
-            .activity-description {
-                font-size: 1rem;
-            }
-            .activity-stats {
-                flex-direction: column;
-                gap: 0.8rem;
-            }
-            .view-all-btn {
-                padding: 0.9rem 2rem;
-                font-size: 1.1rem;
-            }
+        @media (max-width:500px){
+            .donation-header h1 { font-size:2.5rem; }
+            .amount-grid { grid-template-columns:repeat(2,1fr); }
         }
     </style>
 </head>
 <body>
-    <section class="activities-section">
-        <!-- Background Shapes -->
-        <div class="activity-shape-1"></div>
-        <div class="activity-shape-2"></div>
+    <div class="toast" id="toast"><i class="fas fa-check-circle" style="color:#2ecc71;"></i> <span id="toastMsg">success</span></div>
 
-        <div class="container">
-            <!-- Section Header -->
-            <div class="section-header">
-                <div class="section-tag">
-                    <i class="fas fa-calendar-alt"></i> Our Work in Action
-                </div>
-                <h2 class="section-title">
-                    <span>Activities</span> & Programs
-                </h2>
-                <div class="section-subtitle">
-                    Real impact, real stories from Kaliganj
-                </div>
-            </div>
-
-            <!-- Activities Grid - 4 Cards (2 rows x 2 columns) -->
-            <div class="activities-grid">
-                <!-- Activity 1: Winter Clothes Distribution -->
-                <div class="activity-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1544027993-37dbfe44362b?q=80&w=2940&auto=format&fit=crop" alt="Winter clothes distribution">
-                        <div class="image-badge">
-                            <i class="fas fa-map-marker-alt"></i> Kaliganj, 2024
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="activity-title">
-                            <i class="fas fa-tshirt"></i> Winter Clothes Distribution
-                        </h3>
-                        <p class="activity-description">
-                            Distributed warm clothes to 300+ underprivileged families in remote villages of Kaliganj. Each family received blankets, sweaters, and winter essentials.
-                        </p>
-                        <div class="activity-stats">
-                            <div class="stat">
-                                <i class="fas fa-users"></i> <strong>320+</strong> families
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-boxes"></i> <strong>5</strong> villages
-                            </div>
-                        </div>
-                        <a href="#" class="read-more">
-                            See more <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Activity 2: Health Camp -->
-                <div class="activity-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1584516150909-c43483ee7932?q=80&w=2940&auto=format&fit=crop" alt="Free health camp">
-                        <div class="image-badge">
-                            <i class="fas fa-map-marker-alt"></i> Kaliganj Bazar
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="activity-title">
-                            <i class="fas fa-stethoscope"></i> Free Health Camp
-                        </h3>
-                        <p class="activity-description">
-                            Organized a day-long free medical camp with 5 specialist doctors. Provided checkups, medicines, and health awareness sessions to 450+ patients.
-                        </p>
-                        <div class="activity-stats">
-                            <div class="stat">
-                                <i class="fas fa-user-md"></i> <strong>5</strong> doctors
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-pills"></i> <strong>450+</strong> patients
-                            </div>
-                        </div>
-                        <a href="#" class="read-more">
-                            See more <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Activity 3: Scholarship Program -->
-                <div class="activity-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2940&auto=format&fit=crop" alt="Scholarship program">
-                        <div class="image-badge">
-                            <i class="fas fa-map-marker-alt"></i> Kaliganj School
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="activity-title">
-                            <i class="fas fa-graduation-cap"></i> Scholarship Program
-                        </h3>
-                        <p class="activity-description">
-                            Awarded scholarships to 50 meritorious but underprivileged students. Each student received financial support for school fees and study materials.
-                        </p>
-                        <div class="activity-stats">
-                            <div class="stat">
-                                <i class="fas fa-user-graduate"></i> <strong>50</strong> students
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-school"></i> <strong>8</strong> schools
-                            </div>
-                        </div>
-                        <a href="#" class="read-more">
-                            See more <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Activity 4: Relief Distribution -->
-                <div class="activity-card">
-                    <div class="card-image">
-                        <img src="https://images.unsplash.com/photo-1599059813005-11265ba4b4ce?q=80&w=2940&auto=format&fit=crop" alt="Relief distribution">
-                        <div class="image-badge">
-                            <i class="fas fa-map-marker-alt"></i> Flood Affected Areas
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="activity-title">
-                            <i class="fas fa-hand-holding-heart"></i> Relief Distribution
-                        </h3>
-                        <p class="activity-description">
-                            During recent floods, distributed dry food, clean water, and emergency supplies to 200+ families in 3 worst-hit villages of Kaliganj.
-                        </p>
-                        <div class="activity-stats">
-                            <div class="stat">
-                                <i class="fas fa-users"></i> <strong>200+</strong> families
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-box-open"></i> <strong>800+</strong> food packs
-                            </div>
-                        </div>
-                        <a href="#" class="read-more">
-                            See more <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- View All Button -->
-            <div class="view-all-container">
-                <a href="#" class="view-all-btn">
-                    View All Activities <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
-
-            <!-- Impact Message -->
-            <div style="text-align: center; margin-top: 4rem; padding: 2rem; background: rgba(255, 127, 62, 0.03); border-radius: 50px 12px 50px 12px;">
-                <p style="font-size: 1.2rem; color: #4a5c62; font-style: italic;">
-                    <i class="fas fa-quote-left" style="color: #FF7F3E; opacity: 0.5; margin-right: 8px;"></i>
-                    Every activity is a step toward our dream of a stronger Kaliganj.
-                    <i class="fas fa-quote-right" style="color: #FF7F3E; opacity: 0.5; margin-left: 8px;"></i>
-                </p>
+    <nav class="navbar">
+        <div class="nav-container">
+            <!-- Clicking logo goes to index.html -->
+            <a href="index.html" class="logo" id="homeLogo">
+                <div class="logo-icon"><span>KH</span></div>
+                <span class="logo-text">Kaliganj Hands</span>
+            </a>
+            <div class="nav-links">
+                <!-- Home link now points to index.html -->
+                <a href="index.html" id="homeNavLink"><i class="fas fa-home"></i> Home</a>
+                <!-- Home button also points to index.html -->
+                <a href="index.html" class="btn-home" id="homeBtn">← Home</a>
             </div>
         </div>
-    </section>
+    </nav>
 
-    <!-- Next Section Placeholder -->
-    <section style="padding: 2rem; text-align: center; background: #f9f9f9;">
-        <p style="color: #aaa;">⬆️ Activities & Programs complete — next: Get Involved / Contact</p>
-    </section>
+    <div class="container">
+        <div class="donation-header">
+            <h1>Secure <span>donation</span> portal</h1>
+            <p>100% goes to community. You'll receive a beautiful, colorful PDF receipt.</p>
+        </div>
+
+        <!-- PREMIUM DONATION CARD (with address and anonymous support) -->
+        <div class="premium-card" id="donationCard">
+            <div class="premium-left">
+                <h2><i class="fas fa-feather-alt"></i> Your impact</h2>
+                <ul class="impact-list">
+                    <li><i class="fas fa-tshirt"></i> <strong>500 BDT</strong> — warm clothes for one family</li>
+                    <li><i class="fas fa-apple-alt"></i> <strong>1,200 BDT</strong> — food pack for a week</li>
+                    <li><i class="fas fa-book"></i> <strong>2,500 BDT</strong> — school materials for 5 children</li>
+                    <li><i class="fas fa-hospital"></i> <strong>5,000 BDT</strong> — medical camp for 50 people</li>
+                </ul>
+                <div class="testimonial">
+                    “Every donation is used with dignity. We share detailed reports.” — Tahmina, founder
+                </div>
+                <div style="display: flex; gap: 15px; color: var(--primary); font-weight: 500;">
+                    <span>⭐ 100% transparent</span>
+                    <span>⭐ zero overhead</span>
+                </div>
+            </div>
+            <div class="premium-right">
+                <h3 style="font-size: 2rem; margin-bottom: 1rem;">donate <span style="color:var(--primary);">now</span></h3>
+                
+                <!-- donor type (optional) -->
+                <div class="donor-type">
+                    <button class="type-btn active" id="individualBtn"><i class="far fa-user"></i> Individual</button>
+                    <button class="type-btn" id="companyBtn"><i class="fas fa-building"></i> Company</button>
+                </div>
+
+                <!-- form - all fields optional except amount (but we handle gracefully) -->
+                <div class="input-group">
+                    <label>Full name <span style="font-weight:400; color:var(--gray);">(optional)</span></label>
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="fullName" placeholder="leave blank for anonymous" value="">
+                </div>
+                
+                <div class="input-group">
+                    <label>Address <span style="font-weight:400; color:var(--gray);">(optional)</span></label>
+                    <i class="fas fa-map-marker-alt"></i>
+                    <textarea id="address" placeholder="street, city (optional)"></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label>Email <span style="font-weight:400; color:var(--gray);">(optional)</span></label>
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="for receipt copy">
+                </div>
+
+                <div class="input-group">
+                    <label>Payment method</label>
+                    <i class="fas fa-credit-card"></i>
+                    <select id="paymentMethod">
+                        <option value="bKash">bKash (Mobile)</option>
+                        <option value="Nagad">Nagad</option>
+                        <option value="Rocket">Rocket</option>
+                        <option value="Visa">Visa / Mastercard</option>
+                        <option value="Bank">Bank transfer</option>
+                    </select>
+                </div>
+
+                <!-- amount selector -->
+                <label style="font-weight:600;">Select amount (BDT) <span style="color:red;">*</span></label>
+                <div class="amount-grid" id="amountGrid">
+                    <div class="amount-option selected" data-amount="500">500</div>
+                    <div class="amount-option" data-amount="1000">1000</div>
+                    <div class="amount-option" data-amount="2000">2000</div>
+                    <div class="amount-option" data-amount="3000">3000</div>
+                    <div class="amount-option" data-amount="5000">5000</div>
+                    <div class="amount-option" data-amount="other">other</div>
+                </div>
+                <div class="input-group" id="customAmountField" style="display: none;">
+                    <label>Custom amount (BDT)</label>
+                    <i class="fas fa-coins"></i>
+                    <input type="number" id="customAmount" placeholder="min 100" min="100">
+                </div>
+
+                <!-- pay button -->
+                <button class="pay-btn" id="payBtn"><span id="payText">Pay securely</span> <i class="fas fa-lock" id="lockIcon"></i></button>
+                <div class="secure-badge">
+                    <span><i class="fas fa-shield-alt"></i> SSL/TLS</span>
+                    <span><i class="fas fa-lock"></i> encrypted</span>
+                </div>
+                <p style="font-size:0.85rem; text-align:center; color:var(--gray); margin-top:0.5rem;">Name, address, email are optional. You can donate anonymously.</p>
+            </div>
+        </div>
+
+        <!-- ===== COLORFUL, DATA-RICH PDF RECEIPT ===== -->
+        <div class="receipt-container" id="receiptContainer">
+            <div id="receiptContent">
+                <div class="receipt-header">
+                    <h3>Kaliganj Hands ✦</h3>
+                    <span>TAX RECEIPT</span>
+                </div>
+                
+                <div class="receipt-id-row">
+                    <span><i class="fas fa-hashtag"></i> Receipt: <strong id="receiptNoDisplay">KH-2026-03-18-842</strong></span>
+                    <span><i class="far fa-calendar-alt"></i> <strong id="receiptDateDisplay">18 March 2026</strong></span>
+                </div>
+
+                <div class="receipt-grid">
+                    <div class="receipt-item">
+                        <div class="label"><i class="fas fa-user"></i> DONOR NAME</div>
+                        <div class="value" id="receiptDonor">Anonymous Hero</div>
+                    </div>
+                    <div class="receipt-item">
+                        <div class="label"><i class="fas fa-map-marker-alt"></i> ADDRESS</div>
+                        <div class="value" id="receiptAddress">Not provided</div>
+                    </div>
+                    <div class="receipt-item">
+                        <div class="label"><i class="fas fa-envelope"></i> EMAIL</div>
+                        <div class="value" id="receiptMail">—</div>
+                    </div>
+                    <div class="receipt-item">
+                        <div class="label"><i class="fas fa-credit-card"></i> PAYMENT METHOD</div>
+                        <div class="value" id="receiptPayMethod">bKash</div>
+                    </div>
+                    <div class="receipt-item">
+                        <div class="label"><i class="fas fa-coins"></i> AMOUNT (BDT)</div>
+                        <div class="value" id="receiptSum">500</div>
+                    </div>
+                    <div class="receipt-item">
+                        <div class="label"><i class="fas fa-heart"></i> STATUS</div>
+                        <div class="value"><span style="color:#2ecc71;">✓ COMPLETED</span></div>
+                    </div>
+                </div>
+
+                <div style="background: linear-gradient(145deg, #ffe7d5, #ffd5b3); padding: 1.5rem; border-radius: 40px 12px 40px 12px; margin: 1.5rem 0; text-align: center; font-size: 1.2rem; border: 2px solid white;">
+                    <i class="fas fa-quote-left" style="color:var(--primary);"></i> 
+                    Thank you for being a hand for Kaliganj. Your support changes lives.
+                    <i class="fas fa-quote-right" style="color:var(--primary);"></i>
+                </div>
+
+                <div class="receipt-footer">
+                    <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 1rem;">
+                        <span><i class="fas fa-check-circle" style="color:var(--primary);"></i> Digital receipt</span>
+                        <span><i class="fas fa-leaf" style="color:var(--primary);"></i> Zero overhead</span>
+                        <span class="qr-sim">⬛⬛⬛</span>
+                    </div>
+                    <div style="font-size:0.9rem;">this receipt is valid under KH foundation · keep for records</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center;">
+                <button class="download-btn" id="downloadPDFbtn"><i class="fas fa-file-pdf"></i> Download colorful PDF receipt</button>
+            </div>
+        </div>
+
+        <!-- home return link also points to index.html -->
+        <div class="home-return">
+            <a href="index.html" id="homeReturnLink" class="return-link"><i class="fas fa-arrow-left"></i> back to Kaliganj Hands home</a>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 Kaliganj Hands – every hand matters</p>
+    </footer>
+
+    <script>
+        (function() {
+            // DOM elements
+            const individualBtn = document.getElementById('individualBtn');
+            const companyBtn = document.getElementById('companyBtn');
+            const fullName = document.getElementById('fullName');
+            const address = document.getElementById('address');
+            const email = document.getElementById('email');
+            const paymentMethod = document.getElementById('paymentMethod');
+            const amountOptions = document.querySelectorAll('.amount-option');
+            const customField = document.getElementById('customAmountField');
+            const customInput = document.getElementById('customAmount');
+            const payBtn = document.getElementById('payBtn');
+            const payText = document.getElementById('payText');
+            const lockIcon = document.getElementById('lockIcon');
+            const receiptContainer = document.getElementById('receiptContainer');
+            
+            // receipt fields
+            const receiptNoDisplay = document.getElementById('receiptNoDisplay');
+            const receiptDateDisplay = document.getElementById('receiptDateDisplay');
+            const receiptDonor = document.getElementById('receiptDonor');
+            const receiptAddress = document.getElementById('receiptAddress');
+            const receiptMail = document.getElementById('receiptMail');
+            const receiptSum = document.getElementById('receiptSum');
+            const receiptPayMethod = document.getElementById('receiptPayMethod');
+            const downloadBtn = document.getElementById('downloadPDFbtn');
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+
+            // home links are now normal <a href="index.html">, so no JavaScript needed for navigation
+
+            // donor type toggle (just visual)
+            individualBtn.addEventListener('click', () => {
+                individualBtn.classList.add('active');
+                companyBtn.classList.remove('active');
+            });
+            companyBtn.addEventListener('click', () => {
+                companyBtn.classList.add('active');
+                individualBtn.classList.remove('active');
+            });
+
+            // amount selection
+            let selectedAmount = 500;
+            amountOptions.forEach(opt => {
+                opt.addEventListener('click', () => {
+                    amountOptions.forEach(o => o.classList.remove('selected'));
+                    opt.classList.add('selected');
+                    if (opt.dataset.amount === 'other') {
+                        customField.style.display = 'block';
+                        selectedAmount = null;
+                    } else {
+                        customField.style.display = 'none';
+                        selectedAmount = parseInt(opt.dataset.amount);
+                    }
+                });
+            });
+
+            function showToast(msg) {
+                toastMsg.innerText = msg;
+                toast.style.display = 'flex';
+                setTimeout(() => { toast.style.display = 'none'; }, 3000);
+            }
+
+            function generateReceiptNumber() {
+                const now = new Date();
+                const y = now.getFullYear().toString().slice(-2);
+                const m = String(now.getMonth()+1).padStart(2,'0');
+                const d = String(now.getDate()).padStart(2,'0');
+                const rand = Math.floor(Math.random()*900+100);
+                return `KH-${y}${m}${d}-${rand}`;
+            }
+
+            // ===== PAYMENT & RECEIPT POPULATION (handles empty fields) =====
+            payBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                // amount validation (only mandatory field)
+                let finalAmount = selectedAmount;
+                if (customField.style.display === 'block') {
+                    if (!customInput.value || parseInt(customInput.value) < 50) {
+                        alert('Please enter a valid amount (minimum 50 BDT)');
+                        return;
+                    }
+                    finalAmount = parseInt(customInput.value);
+                }
+                if (!finalAmount) {
+                    alert('Please select or enter an amount');
+                    return;
+                }
+
+                // SIMULATE PAYMENT
+                payText.innerText = 'Processing';
+                lockIcon.classList = 'fas fa-spinner fa-pulse';
+                payBtn.disabled = true;
+
+                setTimeout(() => {
+                    payText.innerText = 'Pay securely';
+                    lockIcon.classList = 'fas fa-lock';
+                    payBtn.disabled = false;
+
+                    // get values (handle empty = anonymous / not provided)
+                    const donorName = fullName.value.trim();
+                    const donorAddress = address.value.trim();
+                    const donorEmail = email.value.trim();
+                    const methodText = paymentMethod.options[paymentMethod.selectedIndex].text;
+                    const receiptNumber = generateReceiptNumber();
+                    const todayDate = new Date().toLocaleDateString('en-GB', { day:'numeric', month:'long', year:'numeric' });
+
+                    // set receipt fields with fallbacks
+                    receiptNoDisplay.innerText = receiptNumber;
+                    receiptDateDisplay.innerText = todayDate;
+                    
+                    // NAME: if empty -> "Anonymous Hero 🌟"
+                    if (donorName === '') {
+                        receiptDonor.innerText = 'Anonymous Hero 🌟';
+                    } else {
+                        receiptDonor.innerText = donorName;
+                    }
+
+                    // ADDRESS: if empty -> "Not provided"
+                    receiptAddress.innerText = donorAddress || 'Not provided';
+
+                    // EMAIL: if empty -> "—"
+                    receiptMail.innerText = donorEmail || '—';
+
+                    receiptSum.innerText = finalAmount + ' BDT';
+                    receiptPayMethod.innerText = methodText;
+
+                    // show receipt
+                    receiptContainer.style.display = 'block';
+                    receiptContainer.scrollIntoView({ behavior: 'smooth' });
+
+                    showToast('✅ Payment successful! Colorful receipt ready');
+
+                }, 1500);
+            });
+
+            // ===== FIXED: PDF DOWNLOAD NOW CAPTURES THE ENTIRE RECEIPT WITH DATA =====
+            downloadBtn.addEventListener('click', function() {
+                // Get the receipt element
+                const element = document.getElementById('receiptContent');
+                
+                // Ensure all styles are applied and content is visible
+                if (!element) {
+                    alert('Receipt content not found');
+                    return;
+                }
+
+                // Show loading toast
+                showToast('📄 Generating PDF with your data...');
+
+                // Configure PDF options for best quality
+                const opt = {
+                    margin:        [0.3, 0.3, 0.3, 0.3],
+                    filename:      `KH_receipt_${receiptNoDisplay.innerText}.pdf`,
+                    image:         { type: 'jpeg', quality: 0.98 },
+                    html2canvas:   { 
+                        scale: 2.8, 
+                        letterRendering: true, 
+                        useCORS: true, 
+                        backgroundColor: '#ffffff',
+                        logging: false,
+                        allowTaint: false
+                    },
+                    jsPDF:         { 
+                        unit: 'in', 
+                        format: 'a4', 
+                        orientation: 'portrait'
+                    }
+                };
+
+                // Use html2pdf with a slight delay to ensure styles are applied
+                setTimeout(() => {
+                    html2pdf().set(opt).from(element).save().then(() => {
+                        showToast('✅ PDF downloaded successfully!');
+                    }).catch((error) => {
+                        console.error('PDF generation error:', error);
+                        showToast('❌ PDF generation failed');
+                    });
+                }, 100);
+            });
+        })();
+    </script>
+
+    <style>
+        .pay-btn:disabled { opacity: 0.7; filter: grayscale(0.3); transform: scale(0.98); }
+    </style>
 </body>
 </html>
